@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GigaTV – Vodafone</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        :root {
+            --vf-red: #e60000;
+            --vf-red-dark: #bd0000;
+            --vf-black: #0d0d0d;
+            --vf-bg: #1a1a1a;
+            --vf-bg-light: #262626;
+            --vf-text: #ffffff;
+            --vf-text-muted: #b3b3b3;
+            --vf-border: rgba(255, 255, 255, 0.08);
+        }
+
+        html, body {
+            background: var(--vf-black);
+            color: var(--vf-text);
+            font-family: "Vodafone Rg", "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        a { color: inherit; }
+
+        /* ---------- Header ---------- */
+        header.top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(13, 13, 13, 0.98), rgba(13, 13, 13, 0.85));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--vf-border);
+        }
+
+        .top-bar-inner {
+            display: flex;
+            align-items: center;
+            height: 68px;
+            padding: 0 32px;
+            gap: 32px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .vodafone-logo {
+            height: 32px;
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        .brand-divider {
+            width: 1px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .brand-subtitle {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        nav.main-nav {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+        }
+
+        nav.main-nav a {
+            color: var(--vf-text);
+            text-decoration: none;
+            padding: 10px 18px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: background 0.15s ease, color 0.15s ease;
+            position: relative;
+        }
+
+        nav.main-nav a:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        nav.main-nav a.active {
+            color: var(--vf-red);
+        }
+
+        nav.main-nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: -22px;
+            left: 18px;
+            right: 18px;
+            height: 3px;
+            background: var(--vf-red);
+            border-radius: 2px 2px 0 0;
+        }
+
+        .top-bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            text-decoration: none;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e60000, #990000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            border: 2px solid transparent;
+            transition: border-color 0.15s;
+        }
+
+        .avatar:hover {
+            border-color: white;
+        }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            position: relative;
+            height: 540px;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url("images/photo-reichstag.jpg");
+            background-size: cover;
+            background-position: center 55%;
+        }
+
+        .hero-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(230,0,0,0.2) 0%, rgba(0,0,0,0) 60%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right,
+                rgba(13, 13, 13, 0.95) 0%,
+                rgba(13, 13, 13, 0.6) 40%,
+                rgba(13, 13, 13, 0.2) 70%,
+                transparent 100%
+            );
+        }
+
+        .hero-bottom-fade {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 120px;
+            background: linear-gradient(to bottom, transparent, var(--vf-black));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 80px 48px;
+            max-width: 660px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--vf-red);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            width: fit-content;
+            margin-bottom: 16px;
+        }
+
+        .hero-title {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            margin-bottom: 16px;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            color: var(--vf-text-muted);
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta .rating {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .hero-meta .dot {
+            width: 4px;
+            height: 4px;
+            background: var(--vf-text-muted);
+            border-radius: 50%;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #d9d9d9;
+            margin-bottom: 28px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 6px;
+            border: none;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.1s, background 0.15s, border-color 0.15s;
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: var(--vf-red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--vf-red-dark);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* ---------- Rails ---------- */
+        main {
+            padding: 0 48px 80px;
+        }
+
+        .rail {
+            margin-bottom: 40px;
+        }
+
+        .rail-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .rail-title {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .rail-see-all {
+            color: var(--vf-text-muted);
+            font-size: 13px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .rail-see-all:hover {
+            color: var(--vf-red);
+        }
+
+        .rail-track {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            overflow-y: visible;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 8px 0 12px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .rail-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tile {
+            flex: 0 0 auto;
+            width: 260px;
+            cursor: pointer;
+            scroll-snap-align: start;
+        }
+
+        .tile:hover .tile-art {
+            transform: scale(1.03);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+        }
+
+        .tile-art {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--vf-bg-light);
+            margin-bottom: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transform-origin: center center;
+        }
+
+        .tile-art::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            box-shadow: inset 0 0 0 0 var(--vf-red);
+            transition: box-shadow 0.15s;
+            pointer-events: none;
+        }
+
+        .tile:hover .tile-art::after {
+            box-shadow: inset 0 0 0 2px var(--vf-red);
+        }
+
+        .tile-art-bg {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+        }
+
+        .tile-art-bg img {
+            max-width: 70%;
+            max-height: 70%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+        }
+
+        /* Full-bleed thumbnail photo on show tiles */
+        .tile-photo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        /* Dark scrim so overlays stay legible */
+        .tile-scrim::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.55) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .tile-channel {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+        .tile-live {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--vf-red);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 2;
+        }
+
+        .tile-live::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 1.6s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .tile-progress {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.25);
+            z-index: 2;
+        }
+
+        .tile-progress-fill {
+            height: 100%;
+            background: var(--vf-red);
+        }
+
+        .tile-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tile-meta {
+            font-size: 12px;
+            color: var(--vf-text-muted);
+        }
+
+        /* Poster backgrounds — stylized, evocative of each show */
+        .bg-news    { background: linear-gradient(135deg, #003366 0%, #001a33 100%); }
+        .bg-news2   { background: linear-gradient(135deg, #c8102e 0%, #6b0000 100%); }
+        .bg-quiz    { background: radial-gradient(ellipse at center, #ffcc00 0%, #8b4500 70%, #3a1d00 100%); }
+        .bg-show    { background: linear-gradient(135deg, #00c853 0%, #004d1f 100%); }
+        .bg-crime   { background: linear-gradient(135deg, #1f1f1f 0%, #000000 70%); }
+        .bg-invest  { background: linear-gradient(135deg, #2e1065 0%, #0d0025 100%); }
+        .bg-sport   { background: linear-gradient(135deg, #0a3d62 0%, #000a1a 100%); }
+        .bg-doc     { background: linear-gradient(135deg, #4a148c 0%, #12005e 100%); }
+        .bg-mystery { background: linear-gradient(135deg, #1b3a4b 0%, #000a0f 100%); }
+        .bg-war     { background: linear-gradient(135deg, #3e2723 0%, #1b0e0b 100%); }
+        .bg-nature  { background: linear-gradient(135deg, #1b5e20 0%, #002d0a 100%); }
+        .bg-comedy  { background: linear-gradient(135deg, #f57c00 0%, #6d1a00 100%); }
+        .bg-thriller { background: linear-gradient(135deg, #b71c1c 0%, #1a0000 100%); }
+        .bg-spy     { background: linear-gradient(135deg, #263238 0%, #000a0f 100%); }
+        .bg-talk    { background: linear-gradient(135deg, #5d4037 0%, #1a0a00 100%); }
+        .bg-satire  { background: linear-gradient(135deg, #6a1b9a 0%, #12003a 100%); }
+        .bg-soap    { background: linear-gradient(135deg, #c2185b 0%, #330011 100%); }
+
+        /* Decorative overlay motif on posters */
+        .poster-title {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .poster-title .main-text {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+            color: white;
+        }
+
+        .poster-title .sub-text {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 8px;
+            opacity: 0.85;
+        }
+
+        .poster-vignette::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%);
+            z-index: 0;
+        }
+
+        .poster-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 62%;
+            max-height: 60%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            z-index: 2;
+            filter: drop-shadow(0 2px 12px rgba(0,0,0,0.7));
+        }
+
+        .poster-logo.tint-white {
+            filter: brightness(0) invert(1) drop-shadow(0 2px 12px rgba(0,0,0,0.7));
+        }
+
+        /* ---------- Channel logo row ---------- */
+        .channel-row .tile {
+            width: 120px;
+        }
+
+        .channel-row .tile-art {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .channel-row .tile-art img {
+            max-width: 60%;
+            max-height: 60%;
+            object-fit: contain;
+        }
+
+        .channel-row .tile-art::after {
+            border-radius: 50%;
+        }
+
+        .channel-row .tile-title {
+            text-align: center;
+        }
+
+        /* ---------- Footer ---------- */
+        footer {
+            background: var(--vf-bg);
+            padding: 40px 48px 32px;
+            border-top: 1px solid var(--vf-border);
+            font-size: 13px;
+            color: var(--vf-text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: var(--vf-text-muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-legal {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--vf-border);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 900px) {
+            .top-bar-inner { padding: 0 16px; gap: 16px; }
+            nav.main-nav { display: none; }
+            .hero { height: 440px; }
+            .hero-content { padding: 40px 20px; }
+            .hero-title { font-size: 36px; }
+            .hero-description { font-size: 14px; }
+            main { padding: 0 20px 60px; }
+            .tile { width: 200px; }
+            .channel-row .tile { width: 100px; }
+            footer { padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== TOP BAR ========== -->
+    <header class="top-bar">
+        <div class="top-bar-inner">
+            <a href="index.html" class="logo-link">
+                <img class="vodafone-logo" src="images/vodafone-logo.svg" alt="Vodafone">
+                <div class="brand-divider"></div>
+                <div class="brand-subtitle">GigaTV</div>
+            </a>
+
+            <nav class="main-nav">
+                <a href="#" class="active">Startseite</a>
+                <a href="#">Live TV</a>
+                <a href="#">Sendungen</a>
+                <a href="#">Filme</a>
+                <a href="#">Serien</a>
+                <a href="#">Mediathek</a>
+                <a href="#">Aufnahmen</a>
+            </nav>
+
+            <div class="top-bar-actions">
+                <button class="icon-btn" aria-label="Suche">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                </button>
+                <button class="icon-btn" aria-label="Benachrichtigungen">
+                    <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                </button>
+                <button class="icon-btn" aria-label="Einstellungen">
+                    <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94 0 .31.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                </button>
+                <a href="account.html" class="avatar" title="Mein Konto – Anna Mader">AM</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Jetzt Live</div>
+            <h1 class="hero-title">Tagesschau</h1>
+            <div class="hero-meta">
+                <span class="rating">FSK 0</span>
+                <span>Das Erste</span>
+                <span class="dot"></span>
+                <span>Nachrichten</span>
+                <span class="dot"></span>
+                <span>20:00 – 20:15</span>
+            </div>
+            <p class="hero-description">
+                Die wichtigsten Nachrichten des Tages aus Deutschland und der Welt – kompakt, verlässlich und aktuell. Seit über 70 Jahren das meistgesehene Nachrichtenformat Deutschlands.
+            </p>
+            <div class="hero-actions">
+                <a href="#" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    Jetzt ansehen
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    Zu Merkliste
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                    Neustart
+                </a>
+            </div>
+        </div>
+        <div class="hero-bottom-fade"></div>
+    </section>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main>
+        <!-- Jetzt im Fernsehen -->
+        <section class="rail">
+            <div class="rail-header">
+                <h2 class="rail-title">Jetzt im Fernsehen</h2>
+                <a href="#" class="rail-see-all">Alle anzeigen ›</a>
+            </div>
+            <div class="rail-track">
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-newsstudio.jpg" alt="">
+                        <span class="tile-channel">Das Erste</span>
+                        <span class="tile-live">LIVE</span>
+                        <img class="poster-logo" src="images/tagesschau.svg" alt="Tagesschau">
+                        <div class="tile-progress"><div class="tile-progress-fill" style="width: 62%"></div></div>
+                    </div>
+                    <div class="tile-title">Tagesschau</div>
+                    <div class="tile-meta">20:00 – 20:15 · Nachrichten</div>
+                </div>
+
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-tvstudio.jpg" alt="">
+                        <span class="tile-channel">ZDF</span>
+                        <span class="tile-live">LIVE</span>
+                        <div class="poster-title">
+                            <div class="main-text" style="font-family:Georgia,serif;">heute journal</div>
+                            <div class="sub-text">ZDF · 21:45</div>
+                        </div>
+                        <div class="tile-progress"><div class="tile-progress-fill" style="width: 45%"></div></div>
+                    </div>
+                    <div class="tile-title">heute journal</div>
+                    <div class="tile-meta">21:45 – 22:15 · Nachrichten</div>
+                </div>
+
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-jauch.jpg" alt="">
+                        <span class="tile-channel">RTL</span>
+                        <span class="tile-live">LIVE</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="font-size:20px;">Wer wird Millionär?</div>
+                            <div class="sub-text" style="margin-top:4px;">mit Günther Jauch</div>
+                        </div>
+                        <div class="tile-progress"><div class="tile-progress-fill" style="width: 28%"></div></div>
+                    </div>
+                    <div class="tile-title">Wer wird Millionär?</div>
+                    <div class="tile-meta">20:15 – 21:15 · Quiz</div>
+                </div>
+
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-pufpaff.jpg" alt="">
+                        <span class="tile-channel">ProSieben</span>
+                        <span class="tile-live">LIVE</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="font-size:22px;">TV total</div>
+                            <div class="sub-text" style="margin-top:4px;">mit Sebastian Pufpaff</div>
+                        </div>
+                        <div class="tile-progress"><div class="tile-progress-fill" style="width: 18%"></div></div>
+                    </div>
+                    <div class="tile-title">TV total</div>
+                    <div class="tile-meta">20:15 – 21:45 · Show</div>
+                </div>
+
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-crime.jpg" alt="">
+                        <span class="tile-channel">SAT.1</span>
+                        <span class="tile-live">LIVE</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="font-size:22px;">Navy CIS</div>
+                            <div class="sub-text" style="margin-top:4px;">Staffel 21</div>
+                        </div>
+                        <div class="tile-progress"><div class="tile-progress-fill" style="width: 55%"></div></div>
+                    </div>
+                    <div class="tile-title">Navy CIS</div>
+                    <div class="tile-meta">20:15 – 21:15 · Krimi</div>
+                </div>
+
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-business.jpg" alt="">
+                        <span class="tile-channel">VOX</span>
+                        <span class="tile-live">LIVE</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="font-size:20px;">Die Höhle der Löwen</div>
+                            <div class="sub-text" style="margin-top:4px;">Staffel 18</div>
+                        </div>
+                        <div class="tile-progress"><div class="tile-progress-fill" style="width: 33%"></div></div>
+                    </div>
+                    <div class="tile-title">Die Höhle der Löwen</div>
+                    <div class="tile-meta">20:15 – 22:15 · Business</div>
+                </div>
+
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-stadium.jpg" alt="">
+                        <span class="tile-channel">Sky Sport</span>
+                        <span class="tile-live">LIVE</span>
+                        <img class="poster-logo tint-white" src="images/bundesliga.svg" alt="Bundesliga" style="top:38%;max-height:32%;">
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="sub-text" style="margin-top:0;">BVB – FC Bayern · 30. Spieltag</div>
+                        </div>
+                        <div class="tile-progress"><div class="tile-progress-fill" style="width: 72%"></div></div>
+                    </div>
+                    <div class="tile-title">Bundesliga: BVB – FC Bayern</div>
+                    <div class="tile-meta">20:30 – 22:30 · Sport</div>
+                </div>
+
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-map.jpg" alt="">
+                        <span class="tile-channel">Arte</span>
+                        <span class="tile-live">LIVE</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="font-size:22px;">Re: Europa</div>
+                            <div class="sub-text" style="margin-top:4px;">Reportage</div>
+                        </div>
+                        <div class="tile-progress"><div class="tile-progress-fill" style="width: 40%"></div></div>
+                    </div>
+                    <div class="tile-title">Re: Europa</div>
+                    <div class="tile-meta">19:40 – 20:15 · Reportage</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Empfohlen für Sie -->
+        <section class="rail">
+            <div class="rail-header">
+                <h2 class="rail-title">Empfohlen für Sie</h2>
+                <a href="#" class="rail-see-all">Alle anzeigen ›</a>
+            </div>
+            <div class="rail-track">
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-forest.jpg" alt="">
+                        <span class="tile-channel">Netflix</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="letter-spacing:8px;">DARK</div>
+                            <div class="sub-text" style="margin-top:4px;">Eine Netflix Original Serie</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Dark</div>
+                    <div class="tile-meta">3 Staffeln · Mystery</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-submarine.jpg" alt="">
+                        <span class="tile-channel">Film</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="font-size:22px;">Das Boot</div>
+                            <div class="sub-text" style="margin-top:4px;">Wolfgang Petersen · 1981</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Das Boot</div>
+                    <div class="tile-meta">1981 · Kriegsdrama</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-berlin-vintage.jpg" alt="">
+                        <span class="tile-channel">ARD</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="font-size:20px;">Babylon Berlin</div>
+                            <div class="sub-text" style="margin-top:4px;">1929. Weimarer Republik.</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Babylon Berlin</div>
+                    <div class="tile-meta">4 Staffeln · Krimi</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-nature.jpg" alt="">
+                        <span class="tile-channel">BBC</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="font-size:22px;">Planet Erde II</div>
+                            <div class="sub-text" style="margin-top:4px;">David Attenborough</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Planet Erde II</div>
+                    <div class="tile-meta">6 Episoden · Natur</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-trabant.jpg" alt="">
+                        <span class="tile-channel">Film</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="font-size:20px;">Good Bye, Lenin!</div>
+                            <div class="sub-text" style="margin-top:4px;">Wolfgang Becker · 2003</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Good Bye, Lenin!</div>
+                    <div class="tile-meta">2003 · Komödie</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-noir.jpg" alt="">
+                        <span class="tile-channel">Das Erste</span>
+                        <img class="poster-logo tint-white" src="images/tatort.svg" alt="Tatort">
+                    </div>
+                    <div class="tile-title">Tatort</div>
+                    <div class="tile-meta">Über 1200 Folgen · Krimi</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-running.jpg" alt="">
+                        <span class="tile-channel">Film</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="font-size:22px;">Lola rennt</div>
+                            <div class="sub-text" style="margin-top:4px;">Tom Tykwer · 1998</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Lola rennt</div>
+                    <div class="tile-meta">1998 · Thriller</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art tile-scrim">
+                        <img class="tile-photo" src="images/photo-berlinwall.jpg" alt="">
+                        <span class="tile-channel">RTL+</span>
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:16px;">
+                            <div class="main-text" style="font-size:20px;">Deutschland 83</div>
+                            <div class="sub-text" style="margin-top:4px;">Kalter Krieg · Spionage</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Deutschland 83</div>
+                    <div class="tile-meta">3 Staffeln · Spionage</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sender -->
+        <section class="rail channel-row">
+            <div class="rail-header">
+                <h2 class="rail-title">Ihre Sender</h2>
+                <a href="#" class="rail-see-all">Alle Sender ›</a>
+            </div>
+            <div class="rail-track">
+                <div class="tile">
+                    <div class="tile-art" style="background:#fff;">
+                        <img src="images/das-erste.svg" alt="Das Erste">
+                    </div>
+                    <div class="tile-title">Das Erste</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art" style="background:#ff6600;">
+                        <img src="images/zdf.svg" alt="ZDF">
+                    </div>
+                    <div class="tile-title">ZDF</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art" style="background:#fff;">
+                        <img src="images/rtl.svg" alt="RTL">
+                    </div>
+                    <div class="tile-title">RTL</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art" style="background:#000;">
+                        <img src="images/prosieben.svg" alt="ProSieben">
+                    </div>
+                    <div class="tile-title">ProSieben</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art" style="background:#fff;">
+                        <img src="images/sat1.svg" alt="SAT.1">
+                    </div>
+                    <div class="tile-title">SAT.1</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art" style="background:#fff;">
+                        <img src="images/vox.svg" alt="VOX">
+                    </div>
+                    <div class="tile-title">VOX</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art" style="background:#000;">
+                        <img src="images/sky.svg" alt="Sky">
+                    </div>
+                    <div class="tile-title">Sky Sport</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art" style="background:#fff;">
+                        <img src="images/kabeleins.svg" alt="kabel eins">
+                    </div>
+                    <div class="tile-title">kabel eins</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art" style="background:#fff;">
+                        <img src="images/ntv.svg" alt="n-tv">
+                    </div>
+                    <div class="tile-title">n-tv</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art" style="background:#000;">
+                        <img src="images/arte.svg" alt="Arte">
+                    </div>
+                    <div class="tile-title">Arte</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art" style="background:#fff;">
+                        <img src="images/3sat.svg" alt="3sat">
+                    </div>
+                    <div class="tile-title">3sat</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art" style="background:#fff;">
+                        <img src="images/wdr.svg" alt="WDR">
+                    </div>
+                    <div class="tile-title">WDR</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Meine Aufnahmen -->
+        <section class="rail">
+            <div class="rail-header">
+                <h2 class="rail-title">Meine Aufnahmen</h2>
+                <a href="#" class="rail-see-all">Alle anzeigen ›</a>
+            </div>
+            <div class="rail-track">
+                <div class="tile">
+                    <div class="tile-art bg-crime poster-vignette">
+                        <span class="tile-channel">Aufnahme</span>
+                        <img class="poster-logo tint-white" src="images/tatort.svg" alt="Tatort">
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:20px;">
+                            <div class="sub-text" style="margin-top:0;">Borowski · Kiel</div>
+                        </div>
+                        <div class="tile-progress"><div class="tile-progress-fill" style="width: 85%"></div></div>
+                    </div>
+                    <div class="tile-title">Tatort: Borowski und das Haus am Meer</div>
+                    <div class="tile-meta">Gestern · 89 Min.</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-satire poster-vignette">
+                        <span class="tile-channel">Aufnahme</span>
+                        <img class="poster-logo tint-white" src="images/heute-show.svg" alt="heute-show">
+                        <div class="tile-progress"><div class="tile-progress-fill" style="width: 45%"></div></div>
+                    </div>
+                    <div class="tile-title">heute-show</div>
+                    <div class="tile-meta">Freitag · 45 Min.</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-talk poster-vignette">
+                        <span class="tile-channel">Aufnahme</span>
+                        <img class="poster-logo tint-white" src="images/markus-lanz.svg" alt="Markus Lanz">
+                    </div>
+                    <div class="tile-title">Markus Lanz</div>
+                    <div class="tile-meta">Mittwoch · 75 Min.</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-doc poster-vignette">
+                        <span class="tile-channel">Aufnahme</span>
+                        <img class="poster-logo tint-white" src="images/terra-x.svg" alt="Terra X">
+                        <div class="poster-title" style="justify-content:flex-end;padding-bottom:20px;">
+                            <div class="sub-text" style="margin-top:0;">Deutschland von oben</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Terra X: Deutschland von oben</div>
+                    <div class="tile-meta">Sonntag · 45 Min.</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-satire poster-vignette">
+                        <span class="tile-channel">Aufnahme</span>
+                        <img class="poster-logo tint-white" src="images/extra-3.svg" alt="extra 3">
+                    </div>
+                    <div class="tile-title">extra 3</div>
+                    <div class="tile-meta">Donnerstag · 30 Min.</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-soap poster-vignette">
+                        <span class="tile-channel">Aufnahme</span>
+                        <div class="poster-title">
+                            <div class="main-text">Rote Rosen</div>
+                            <div class="sub-text">Telenovela</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Rote Rosen</div>
+                    <div class="tile-meta">Diese Woche · 5 Folgen</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Beliebt in der Mediathek -->
+        <section class="rail">
+            <div class="rail-header">
+                <h2 class="rail-title">Beliebt in der Mediathek</h2>
+                <a href="#" class="rail-see-all">Alle anzeigen ›</a>
+            </div>
+            <div class="rail-track">
+                <div class="tile">
+                    <div class="tile-art bg-comedy poster-vignette">
+                        <span class="tile-channel">ARD Mediathek</span>
+                        <div class="poster-title">
+                            <div class="main-text">Die Discounter</div>
+                            <div class="sub-text">Comedy Serie</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Die Discounter</div>
+                    <div class="tile-meta">Serie · 3 Staffeln</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-mystery poster-vignette">
+                        <span class="tile-channel">ZDF Mediathek</span>
+                        <div class="poster-title">
+                            <div class="main-text">Der Schwarm</div>
+                            <div class="sub-text">nach Frank Schätzing</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Der Schwarm</div>
+                    <div class="tile-meta">Miniserie · 8 Folgen</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-doc poster-vignette">
+                        <span class="tile-channel">ARD Mediathek</span>
+                        <div class="poster-title">
+                            <div class="main-text">Charité</div>
+                            <div class="sub-text">Historiendrama</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Charité</div>
+                    <div class="tile-meta">Serie · 4 Staffeln</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-doc poster-vignette">
+                        <span class="tile-channel">Arte Mediathek</span>
+                        <div class="poster-title">
+                            <div class="main-text">Mit offenen<br>Karten</div>
+                            <div class="sub-text">Geopolitik</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Mit offenen Karten</div>
+                    <div class="tile-meta">Doku-Reihe</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-thriller poster-vignette">
+                        <span class="tile-channel">ZDF Mediathek</span>
+                        <div class="poster-title">
+                            <div class="main-text">Bad Banks</div>
+                            <div class="sub-text">Finanzthriller</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Bad Banks</div>
+                    <div class="tile-meta">Serie · 2 Staffeln</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-comedy poster-vignette">
+                        <span class="tile-channel">ARD Mediathek</span>
+                        <div class="poster-title">
+                            <div class="main-text">Pumuckl</div>
+                            <div class="sub-text">Neue Geschichten</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Neue Geschichten vom Pumuckl</div>
+                    <div class="tile-meta">Serie · 13 Folgen</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-satire poster-vignette">
+                        <span class="tile-channel">ZDF Mediathek</span>
+                        <div class="poster-title">
+                            <div class="main-text">Die Anstalt</div>
+                            <div class="sub-text">Politsatire</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Die Anstalt</div>
+                    <div class="tile-meta">Politsatire</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-art bg-doc poster-vignette">
+                        <span class="tile-channel">Arte Mediathek</span>
+                        <div class="poster-title">
+                            <div class="main-text">Tracks East</div>
+                            <div class="sub-text">Reportage</div>
+                        </div>
+                    </div>
+                    <div class="tile-title">Tracks East</div>
+                    <div class="tile-meta">Reportage</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">Hilfe &amp; Support</a>
+            <a href="#">Kontakt</a>
+            <a href="#">Datenschutz</a>
+            <a href="#" id="cookie-settings">Cookie-Einstellungen</a>
+            <a href="#">Impressum</a>
+            <a href="#">AGB</a>
+            <a href="#">Barrierefreiheit</a>
+            <a href="#">Senderübersicht</a>
+        </div>
+        <div class="footer-legal">
+            <div>© 2026 Vodafone GmbH. Alle Rechte vorbehalten.</div>
+            <div>GigaTV – Ihr Fernsehen. Neu gedacht.</div>
+        </div>
+    </footer>
+</body>
+</html>
