@@ -1,0 +1,508 @@
+/* =============================================================================
+   VODAFONE – ONETRUST COOKIE BANNER + PREFERENCE CENTER
+   ============================================================================= */
+
+:root {
+  --vf-red:        #e60000;
+  --vf-red-dark:   #c50000;
+  --vf-bg:         rgba(0, 0, 0, 0.85);
+  --vf-bg-solid:   #0d0d0d;
+  --vf-bg-panel:   rgba(20, 20, 20, 0.95);
+  --vf-bg-row:     rgba(255, 255, 255, 0.04);
+  --vf-white:      #ffffff;
+  --vf-text:       rgba(255, 255, 255, 0.85);
+  --vf-text-muted: rgba(255, 255, 255, 0.6);
+  --vf-border:     rgba(255, 255, 255, 0.2);
+  --vf-border-soft: rgba(255, 255, 255, 0.1);
+
+  --vf-font:       Vodafone, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* =============================================================================
+   BASE RESET
+   ============================================================================= */
+#onetrust-banner-sdk,
+#onetrust-banner-sdk *,
+#onetrust-pc-sdk,
+#onetrust-pc-sdk * {
+  font-family: var(--vf-font) !important;
+  box-sizing: border-box !important;
+}
+
+/* =============================================================================
+   1. BANNER
+   ============================================================================= */
+#onetrust-banner-sdk {
+  background: var(--vf-bg) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+
+  color: var(--vf-white) !important;
+  border: none !important;
+  border-radius: 28px 28px 0 0 !important;
+  box-shadow: 0 -10px 34px rgba(0,0,0,0.6) !important;
+
+  padding: 24px 28px !important;
+}
+
+#onetrust-policy-title {
+  color: var(--vf-white) !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  margin-bottom: 10px !important;
+}
+
+#onetrust-policy-text,
+#onetrust-banner-sdk p {
+  color: var(--vf-text) !important;
+  font-size: 13.5px !important;
+  line-height: 1.55 !important;
+}
+
+#onetrust-banner-sdk a {
+  text-decoration: underline !important;
+  font-weight: 600 !important;
+}
+
+#onetrust-banner-sdk a[href*="vendor"],
+#onetrust-banner-sdk .ot-link-btn {
+  color: var(--vf-red) !important;
+}
+
+#onetrust-banner-sdk a[href*="vendor"]:hover,
+#onetrust-banner-sdk .ot-link-btn:hover {
+  color: var(--vf-red-dark) !important;
+}
+
+/* Banner buttons */
+#onetrust-banner-sdk #onetrust-button-group button,
+#onetrust-banner-sdk .ot-sdk-button {
+  min-width: 180px !important;
+  padding: 12px 26px !important;
+  min-height: 44px !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+  box-sizing: border-box !important;
+  transition: background 0.2s ease, border-color 0.2s ease !important;
+}
+
+#onetrust-accept-btn-handler {
+  background: var(--vf-red) !important;
+  border: 2px solid var(--vf-red) !important;
+  color: var(--vf-white) !important;
+}
+
+#onetrust-accept-btn-handler:hover {
+  background: var(--vf-red-dark) !important;
+  border-color: var(--vf-red-dark) !important;
+}
+
+#onetrust-reject-all-handler {
+  background: transparent !important;
+  border: 2px solid var(--vf-red) !important;
+  color: var(--vf-white) !important;
+}
+
+#onetrust-reject-all-handler:hover {
+  background: var(--vf-red) !important;
+}
+
+#onetrust-pc-btn-handler,
+.ot-sdk-show-settings {
+  background: transparent !important;
+  color: var(--vf-white) !important;
+  border: 2px solid var(--vf-border) !important;
+}
+
+#onetrust-pc-btn-handler:hover {
+  border-color: var(--vf-white) !important;
+}
+
+#onetrust-banner-sdk .ot-close-icon {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  #onetrust-banner-sdk {
+    border-radius: 0 !important;
+    padding: 20px 16px !important;
+  }
+}
+
+
+/* =============================================================================
+   2. PREFERENCE CENTER — FORCE VISIBLE
+   (fixes overlay-shows-but-modal-doesn't bug)
+   ============================================================================= */
+.onetrust-pc-dark-filter {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  z-index: 2147483646 !important;
+}
+
+#onetrust-pc-sdk {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 2147483647 !important;
+
+  background: var(--vf-bg-solid) !important;
+  color: var(--vf-white) !important;
+  border: 1px solid var(--vf-border-soft) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7) !important;
+  overflow: hidden !important;
+}
+
+
+/* =============================================================================
+   3. PREFERENCE CENTER — HEADER
+   ============================================================================= */
+#onetrust-pc-sdk .ot-pc-header {
+  background: var(--vf-bg-solid) !important;
+  border-bottom: 1px solid var(--vf-border-soft) !important;
+  padding: 20px 28px !important;
+}
+
+#onetrust-pc-sdk #ot-pc-title,
+#onetrust-pc-sdk .ot-pc-logo + * h2 {
+  color: var(--vf-white) !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.3px !important;
+  border-left: 4px solid var(--vf-red) !important;
+  padding-left: 12px !important;
+  margin: 0 !important;
+}
+
+#onetrust-pc-sdk .ot-close-icon,
+#onetrust-pc-sdk #close-pc-btn-handler {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  color: var(--vf-white) !important;
+  opacity: 0.7 !important;
+  transition: opacity 0.2s, color 0.2s !important;
+}
+
+#onetrust-pc-sdk .ot-close-icon:hover {
+  opacity: 1 !important;
+  color: var(--vf-red) !important;
+}
+
+#onetrust-pc-sdk .ot-close-icon svg path,
+#onetrust-pc-sdk .ot-close-icon svg {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+
+/* =============================================================================
+   4. PREFERENCE CENTER — DESCRIPTION / BODY TEXT
+   ============================================================================= */
+#onetrust-pc-sdk #ot-pc-desc,
+#onetrust-pc-sdk .ot-pc-desc,
+#onetrust-pc-sdk .ot-cat-header,
+#onetrust-pc-sdk .ot-grp-desc,
+#onetrust-pc-sdk .ot-pc-scrollbar,
+#onetrust-pc-sdk p,
+#onetrust-pc-sdk span:not(.ot-switch-nob):not(.ot-switch-nob::before) {
+  color: var(--vf-text) !important;
+}
+
+#onetrust-pc-sdk .ot-pc-scrollbar {
+  background: var(--vf-bg-solid) !important;
+}
+
+#onetrust-pc-sdk a {
+  color: var(--vf-red) !important;
+  text-decoration: underline !important;
+  font-weight: 600 !important;
+}
+
+#onetrust-pc-sdk a:hover {
+  color: var(--vf-red-dark) !important;
+}
+
+
+/* =============================================================================
+   5. PREFERENCE CENTER — CATEGORY LIST / GROUPS
+   ============================================================================= */
+#onetrust-pc-sdk #ot-pc-lst,
+#onetrust-pc-sdk .ot-cat-grp,
+#onetrust-pc-sdk .ot-accordion-layout,
+#onetrust-pc-sdk .ot-cat-item {
+  background: var(--vf-bg-solid) !important;
+  border-color: var(--vf-border-soft) !important;
+}
+
+#onetrust-pc-sdk .ot-accordion-layout,
+#onetrust-pc-sdk .ot-cat-item {
+  background: var(--vf-bg-row) !important;
+  border: 1px solid var(--vf-border-soft) !important;
+  border-radius: 10px !important;
+  margin-bottom: 10px !important;
+  overflow: hidden !important;
+}
+
+#onetrust-pc-sdk .ot-cat-item:hover,
+#onetrust-pc-sdk .ot-accordion-layout:hover {
+  border-color: var(--vf-border) !important;
+}
+
+#onetrust-pc-sdk .ot-cat-header,
+#onetrust-pc-sdk .ot-cat-item h4,
+#onetrust-pc-sdk .ot-cat-grp h4,
+#onetrust-pc-sdk h4 {
+  color: var(--vf-white) !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+}
+
+/* Active / expanded category */
+#onetrust-pc-sdk .ot-cat-item.ot-active-menu,
+#onetrust-pc-sdk .ot-accordion-layout[aria-expanded="true"] {
+  border-color: var(--vf-red) !important;
+  background: rgba(230, 0, 0, 0.08) !important;
+}
+
+/* Always Active pill (for strictly-necessary cookies) */
+#onetrust-pc-sdk .ot-always-active {
+  color: var(--vf-red) !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  background: transparent !important;
+}
+
+
+/* =============================================================================
+   6. PREFERENCE CENTER — TOGGLE SWITCHES
+   ============================================================================= */
+#onetrust-pc-sdk .ot-switch {
+  width: 48px !important;
+  height: 26px !important;
+}
+
+#onetrust-pc-sdk .ot-switch-nob {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  transition: background 0.2s, border-color 0.2s !important;
+}
+
+#onetrust-pc-sdk .ot-switch-nob::before {
+  background: var(--vf-white) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ON state */
+#onetrust-pc-sdk .ot-tgl input:checked + .ot-switch .ot-switch-nob,
+#onetrust-pc-sdk .ot-tgl input:checked ~ .ot-switch .ot-switch-nob {
+  background: var(--vf-red) !important;
+  border-color: var(--vf-red) !important;
+}
+
+#onetrust-pc-sdk .ot-tgl input:checked + .ot-switch .ot-switch-nob::before,
+#onetrust-pc-sdk .ot-tgl input:checked ~ .ot-switch .ot-switch-nob::before {
+  background-color: var(--vf-white) !important;
+  border-color: var(--vf-white) !important;
+}
+
+#onetrust-pc-sdk .ot-tgl input:focus + .ot-switch .ot-switch-nob {
+  outline: 2px solid var(--vf-red) !important;
+  outline-offset: 2px !important;
+}
+
+
+/* =============================================================================
+   7. PREFERENCE CENTER — VENDOR LIST
+   ============================================================================= */
+#onetrust-pc-sdk .ot-host-item,
+#onetrust-pc-sdk .ot-vendor-item,
+#onetrust-pc-sdk #ot-lst-cnt .ot-vlst-cntr {
+  background: var(--vf-bg-row) !important;
+  border: 1px solid var(--vf-border-soft) !important;
+  border-radius: 8px !important;
+  padding: 14px 18px !important;
+  margin-bottom: 8px !important;
+}
+
+#onetrust-pc-sdk .ot-host-name,
+#onetrust-pc-sdk .ot-vendor-name {
+  color: var(--vf-white) !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+}
+
+#onetrust-pc-sdk .ot-host-info,
+#onetrust-pc-sdk .ot-vendor-info {
+  color: var(--vf-text-muted) !important;
+  font-size: 13px !important;
+}
+
+/* Back button when drilling into a group */
+#onetrust-pc-sdk .ot-pc-back-btn,
+#onetrust-pc-sdk .back-btn-handler {
+  background: transparent !important;
+  color: var(--vf-white) !important;
+  border: 1px solid var(--vf-border) !important;
+  border-radius: 999px !important;
+  padding: 6px 16px !important;
+  font-weight: 600 !important;
+}
+
+#onetrust-pc-sdk .ot-pc-back-btn:hover {
+  border-color: var(--vf-red) !important;
+  color: var(--vf-red) !important;
+}
+
+
+/* =============================================================================
+   8. PREFERENCE CENTER — SEARCH INPUT
+   ============================================================================= */
+#onetrust-pc-sdk input[type="search"],
+#onetrust-pc-sdk input[type="text"],
+#onetrust-pc-sdk .ot-search-cntr input {
+  background: var(--vf-bg-row) !important;
+  border: 1px solid var(--vf-border) !important;
+  border-radius: 999px !important;
+  padding: 10px 18px !important;
+  font-size: 14px !important;
+  font-family: var(--vf-font) !important;
+  color: var(--vf-white) !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+}
+
+#onetrust-pc-sdk input::placeholder {
+  color: var(--vf-text-muted) !important;
+}
+
+#onetrust-pc-sdk input:focus {
+  outline: none !important;
+  border-color: var(--vf-red) !important;
+  box-shadow: 0 0 0 3px rgba(230, 0, 0, 0.2) !important;
+}
+
+
+/* =============================================================================
+   9. PREFERENCE CENTER — FOOTER / ACTION BUTTONS
+   ============================================================================= */
+#onetrust-pc-sdk .ot-pc-footer {
+  background: var(--vf-bg-solid) !important;
+  border-top: 1px solid var(--vf-border-soft) !important;
+  padding: 20px 28px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  justify-content: flex-end !important;
+}
+
+#onetrust-pc-sdk .ot-pc-footer button {
+  font-family: var(--vf-font) !important;
+  min-width: 180px !important;
+  padding: 12px 26px !important;
+  min-height: 44px !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: background 0.2s, border-color 0.2s, color 0.2s !important;
+}
+
+/* Primary — "Confirm my choices" / "Save" */
+#onetrust-pc-sdk .save-preference-btn-handler,
+#onetrust-pc-sdk #accept-recommended-btn-handler {
+  background: var(--vf-red) !important;
+  color: var(--vf-white) !important;
+  border: 2px solid var(--vf-red) !important;
+}
+
+#onetrust-pc-sdk .save-preference-btn-handler:hover,
+#onetrust-pc-sdk #accept-recommended-btn-handler:hover {
+  background: var(--vf-red-dark) !important;
+  border-color: var(--vf-red-dark) !important;
+}
+
+/* Secondary — "Reject all" in PC footer */
+#onetrust-pc-sdk .ot-pc-refuse-all-handler {
+  background: transparent !important;
+  color: var(--vf-white) !important;
+  border: 2px solid var(--vf-red) !important;
+}
+
+#onetrust-pc-sdk .ot-pc-refuse-all-handler:hover {
+  background: var(--vf-red) !important;
+}
+
+/* "Powered by OneTrust" footer logo */
+#onetrust-pc-sdk .ot-pc-footer-logo,
+#onetrust-pc-sdk .ot-pc-footer-logo a {
+  opacity: 0.5 !important;
+}
+
+
+/* =============================================================================
+   10. PREFERENCE CENTER — MOBILE
+   ============================================================================= */
+@media (max-width: 768px) {
+  #onetrust-pc-sdk {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+  }
+  #onetrust-pc-sdk .ot-pc-header,
+  #onetrust-pc-sdk .ot-pc-footer {
+    padding: 16px 20px !important;
+  }
+  #onetrust-pc-sdk .ot-pc-footer {
+    flex-direction: column !important;
+  }
+  #onetrust-pc-sdk .ot-pc-footer button {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+
+/* =============================================================================
+   11. FLOATING "COOKIE SETTINGS" PILL + INLINE TRIGGER LINKS
+   ============================================================================= */
+#ot-sdk-btn-floating.ot-floating-button,
+#ot-sdk-btn-floating .ot-floating-button__front {
+  background: var(--vf-red) !important;
+  border-color: var(--vf-red) !important;
+}
+
+#ot-sdk-btn-floating .ot-floating-button__back {
+  background: var(--vf-red-dark) !important;
+}
+
+#ot-sdk-btn-floating.ot-floating-button svg {
+  fill: var(--vf-white) !important;
+}
+
+#ot-sdk-btn,
+.ot-sdk-show-settings,
+.optanon-show-settings {
+  background: transparent !important;
+  color: var(--vf-red) !important;
+  border: 2px solid var(--vf-red) !important;
+  border-radius: 999px !important;
+  padding: 10px 22px !important;
+  font-family: var(--vf-font) !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+
+#ot-sdk-btn:hover,
+.ot-sdk-show-settings:hover,
+.optanon-show-settings:hover {
+  background: var(--vf-red) !important;
+  color: var(--vf-white) !important;
+}
