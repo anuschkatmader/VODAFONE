@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mein Konto – Vodafone</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        :root {
+            --vf-red: #e60000;
+            --vf-red-dark: #bd0000;
+            --vf-dark: #25282b;
+            --vf-text: #25282b;
+            --vf-text-muted: #6c7073;
+            --vf-bg: #f4f4f4;
+            --vf-card: #ffffff;
+            --vf-border: #e4e4e4;
+            --vf-green: #008a00;
+        }
+
+        html, body {
+            background: var(--vf-bg);
+            color: var(--vf-text);
+            font-family: "Vodafone Rg", "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* ---------- Top bar ---------- */
+        header.top-bar {
+            background: white;
+            border-bottom: 1px solid var(--vf-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .top-bar-inner {
+            display: flex;
+            align-items: center;
+            height: 68px;
+            padding: 0 32px;
+            gap: 32px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .vodafone-logo {
+            height: 32px;
+            width: auto;
+        }
+
+        .brand-divider {
+            width: 1px;
+            height: 26px;
+            background: var(--vf-border);
+        }
+
+        .brand-subtitle {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--vf-dark);
+        }
+
+        .top-nav {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .top-nav a {
+            padding: 10px 14px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--vf-text);
+            border-radius: 4px;
+            transition: background 0.15s;
+        }
+
+        .top-nav a:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .top-nav a.active {
+            color: var(--vf-red);
+            font-weight: 600;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-logout {
+            background: none;
+            border: 1px solid var(--vf-border);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            color: var(--vf-text);
+            transition: border-color 0.15s;
+        }
+
+        .btn-logout:hover {
+            border-color: var(--vf-red);
+            color: var(--vf-red);
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e60000, #990000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+        }
+
+        /* ---------- Layout ---------- */
+        .account-hero {
+            background: linear-gradient(135deg, #e60000 0%, #990000 100%);
+            color: white;
+            padding: 48px 32px 32px;
+        }
+
+        .account-hero-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .account-hero-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+
+        .account-hero h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .account-hero-sub {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .account-hero-sub strong { font-weight: 600; }
+
+        .breadcrumb {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 16px 32px 0;
+            font-size: 13px;
+            color: var(--vf-text-muted);
+        }
+
+        .breadcrumb a:hover { color: var(--vf-red); }
+        .breadcrumb .sep { margin: 0 8px; }
+
+        .layout {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 32px;
+        }
+
+        /* ---------- Sidebar ---------- */
+        aside.sidebar {
+            background: var(--vf-card);
+            border-radius: 8px;
+            padding: 12px 0;
+            border: 1px solid var(--vf-border);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        aside.sidebar .side-group {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--vf-border);
+        }
+
+        aside.sidebar .side-group:last-child {
+            border-bottom: none;
+        }
+
+        aside.sidebar .group-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--vf-text-muted);
+            padding: 8px 20px 4px;
+        }
+
+        aside.sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--vf-text);
+            border-left: 3px solid transparent;
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        aside.sidebar a:hover {
+            background: #f8f8f8;
+        }
+
+        aside.sidebar a.active {
+            background: #fff0f0;
+            border-left-color: var(--vf-red);
+            color: var(--vf-red);
+        }
+
+        aside.sidebar svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        /* ---------- Content ---------- */
+        main.content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--vf-card);
+            border: 1px solid var(--vf-border);
+            border-radius: 8px;
+            padding: 28px 32px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--vf-border);
+        }
+
+        .card-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .card-header .card-icon {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header .card-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--vf-red);
+        }
+
+        .btn-edit {
+            background: none;
+            border: 1px solid var(--vf-border);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            color: var(--vf-red);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: border-color 0.15s, background 0.15s;
+        }
+
+        .btn-edit:hover {
+            border-color: var(--vf-red);
+            background: #fff5f5;
+        }
+
+        .btn-edit svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .field-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 32px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .field-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--vf-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--vf-text);
+        }
+
+        .field-value .verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--vf-green);
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        .field-value .verified svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* ---------- Credit card ---------- */
+        .payment-layout {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        .credit-card {
+            width: 400px;
+            height: 240px;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(255,255,255,0.12) 0%, transparent 50%),
+                linear-gradient(135deg, #006fcf 0%, #00457c 100%);
+            border-radius: 14px;
+            padding: 24px;
+            color: white;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,69,124,0.3);
+            overflow: hidden;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .credit-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(255,255,255,0.03) 60px, rgba(255,255,255,0.03) 61px);
+            pointer-events: none;
+        }
+
+        .cc-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 28px;
+        }
+
+        .cc-logo-amex {
+            width: 62px;
+            height: 62px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #006fcf;
+            font-weight: 900;
+            font-size: 8px;
+            line-height: 1;
+            letter-spacing: 0.5px;
+            padding: 4px;
+            text-align: center;
+        }
+
+        .cc-logo-amex .amex-top { font-size: 6.5px; margin-bottom: 2px; }
+        .cc-logo-amex .amex-mid {
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.3px;
+            background: linear-gradient(135deg, #006fcf 0%, #00457c 100%);
+            color: white;
+            padding: 2px 3px;
+            border-radius: 1px;
+            margin-bottom: 2px;
+        }
+        .cc-logo-amex .amex-bot { font-size: 6.5px; font-weight: 700; }
+
+        .cc-chip {
+            width: 44px;
+            height: 34px;
+            background: linear-gradient(135deg, #d4af37 0%, #8b7500 100%);
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .cc-chip::before {
+            content: "";
+            position: absolute;
+            inset: 4px;
+            border: 1px solid rgba(0,0,0,0.2);
+            border-radius: 2px;
+            background:
+                linear-gradient(90deg, transparent 48%, rgba(0,0,0,0.2) 48%, rgba(0,0,0,0.2) 52%, transparent 52%),
+                linear-gradient(0deg, transparent 30%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.2) 35%, transparent 35%, transparent 65%, rgba(0,0,0,0.2) 65%, rgba(0,0,0,0.2) 70%, transparent 70%);
+        }
+
+        .cc-number {
+            font-size: 20px;
+            letter-spacing: 2px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            font-family: "Courier New", monospace;
+        }
+
+        .cc-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .cc-label {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.75;
+            margin-bottom: 4px;
+        }
+
+        .cc-name {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cc-expiry {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .cc-brand-bottom {
+            position: absolute;
+            bottom: 14px;
+            right: 24px;
+            font-family: Georgia, serif;
+            font-style: italic;
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        /* ---------- Payment details on right ---------- */
+        .payment-details {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--vf-border);
+        }
+
+        .payment-row:last-child { border-bottom: none; }
+
+        .payment-row .label { color: var(--vf-text-muted); font-size: 14px; }
+        .payment-row .value { font-weight: 600; font-size: 14px; }
+
+        .payment-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: #e6f7e6;
+            color: var(--vf-green);
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .payment-status::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: var(--vf-green);
+            border-radius: 50%;
+        }
+
+        /* ---------- Subscription ---------- */
+        .subscription-card {
+            background: linear-gradient(135deg, #25282b 0%, #0d0d0d 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 24px 28px;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .subscription-info h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .subscription-info p {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 12px;
+        }
+
+        .subscription-info .price {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .subscription-info .price span {
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+
+        .btn-manage {
+            background: white;
+            color: var(--vf-red);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .btn-manage:hover { background: #f0f0f0; }
+
+        /* ---------- Preferences (empty hook) ---------- */
+        .preferences-placeholder {
+            background: #f8f8f8;
+            border: 2px dashed var(--vf-border);
+            border-radius: 8px;
+            padding: 32px;
+            text-align: center;
+            color: var(--vf-text-muted);
+        }
+
+        .preferences-placeholder h3 {
+            color: var(--vf-text);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .preferences-placeholder .hook-id {
+            font-family: "Courier New", monospace;
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            border: 1px solid var(--vf-border);
+            color: var(--vf-red);
+        }
+
+        /* Temporary inline toggles to illustrate what preferences will look like */
+        .pref-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--vf-border);
+            gap: 24px;
+        }
+
+        .pref-row:last-child { border-bottom: none; }
+
+        .pref-text h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .pref-text p {
+            font-size: 13px;
+            color: var(--vf-text-muted);
+            line-height: 1.4;
+        }
+
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 12px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+
+        .toggle::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .toggle.on {
+            background: var(--vf-red);
+        }
+
+        .toggle.on::after {
+            transform: translateX(20px);
+        }
+
+        footer.page-footer {
+            background: white;
+            border-top: 1px solid var(--vf-border);
+            padding: 32px;
+            font-size: 13px;
+            color: var(--vf-text-muted);
+            text-align: center;
+        }
+
+        .footer-links-row {
+            max-width: 1280px;
+            margin: 0 auto 16px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-links-row a:hover { color: var(--vf-red); }
+
+        @media (max-width: 900px) {
+            .layout { grid-template-columns: 1fr; padding: 16px; }
+            aside.sidebar { position: static; }
+            .field-grid { grid-template-columns: 1fr; }
+            .payment-layout { grid-template-columns: 1fr; }
+            .credit-card { width: 100%; max-width: 400px; }
+            .top-nav { display: none; }
+            .subscription-card { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== TOP BAR ========== -->
+    <header class="top-bar">
+        <div class="top-bar-inner">
+            <a href="index.html" class="logo-link">
+                <img class="vodafone-logo" src="images/vodafone-logo.svg" alt="Vodafone">
+                <div class="brand-divider"></div>
+                <div class="brand-subtitle">Mein Vodafone</div>
+            </a>
+
+            <nav class="top-nav">
+                <a href="#">Übersicht</a>
+                <a href="#" class="active">Mein Konto</a>
+                <a href="#">Verträge</a>
+                <a href="#">Rechnungen</a>
+                <a href="index.html">GigaTV</a>
+                <a href="#">Hilfe</a>
+            </nav>
+
+            <div class="top-actions">
+                <button class="btn-logout">Abmelden</button>
+                <div class="avatar">AM</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section class="account-hero">
+        <div class="account-hero-inner">
+            <div class="account-hero-avatar">AM</div>
+            <div>
+                <h1>Hallo Anna Mader</h1>
+                <div class="account-hero-sub">
+                    Kundennummer: <strong>VF-2023-8847293</strong> · Vertragsstatus: <strong>Aktiv</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="breadcrumb">
+        <a href="index.html">Startseite</a>
+        <span class="sep">›</span>
+        <a href="#">Mein Vodafone</a>
+        <span class="sep">›</span>
+        <span>Mein Konto</span>
+    </div>
+
+    <!-- ========== LAYOUT ========== -->
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="side-group">
+                <div class="group-label">Profil</div>
+                <a href="#personal" class="active">
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    Persönliche Daten
+                </a>
+                <a href="#address">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                    Adresse
+                </a>
+                <a href="#contact">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    Kontaktdaten
+                </a>
+            </div>
+            <div class="side-group">
+                <div class="group-label">Zahlung</div>
+                <a href="#payment">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                    Zahlungsmethode
+                </a>
+                <a href="#billing">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                    Rechnungen
+                </a>
+            </div>
+            <div class="side-group">
+                <div class="group-label">Einstellungen</div>
+                <a href="#preferences">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                    Präferenzen &amp; Einwilligungen
+                </a>
+                <a href="#notifications">
+                    <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                    Benachrichtigungen
+                </a>
+                <a href="#security">
+                    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                    Sicherheit
+                </a>
+            </div>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="content">
+
+            <!-- Subscription card -->
+            <div class="subscription-card">
+                <div class="subscription-info">
+                    <h3>GigaTV Premium</h3>
+                    <p>Über 150 Sender, 1 TB Cloud-Aufnahmen, alle Mediatheken inklusive.</p>
+                    <div class="price">14,99 € <span>/ Monat</span></div>
+                </div>
+                <button class="btn-manage">Vertrag verwalten</button>
+            </div>
+
+            <!-- Personal data -->
+            <div class="card" id="personal">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        <h2>Persönliche Daten</h2>
+                    </div>
+                    <button class="btn-edit">
+                        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        Bearbeiten
+                    </button>
+                </div>
+                <div class="field-grid">
+                    <div class="field">
+                        <span class="field-label">Anrede</span>
+                        <span class="field-value">Frau</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Geburtsdatum</span>
+                        <span class="field-value">14.07.1990</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Vorname</span>
+                        <span class="field-value">Anna</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Nachname</span>
+                        <span class="field-value">Mader</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Kundennummer</span>
+                        <span class="field-value">VF-2023-8847293</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Kunde seit</span>
+                        <span class="field-value">März 2023</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="card" id="address">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                        <h2>Adresse</h2>
+                    </div>
+                    <button class="btn-edit">
+                        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        Bearbeiten
+                    </button>
+                </div>
+                <div class="field-grid">
+                    <div class="field">
+                        <span class="field-label">Straße und Hausnummer</span>
+                        <span class="field-value">Friedrichstraße 112</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Adresszusatz</span>
+                        <span class="field-value">Aufgang B, 3. OG</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Postleitzahl</span>
+                        <span class="field-value">10117</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Stadt</span>
+                        <span class="field-value">Berlin</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Bundesland</span>
+                        <span class="field-value">Berlin</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Land</span>
+                        <span class="field-value">Deutschland</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="card" id="contact">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <h2>Kontaktdaten</h2>
+                    </div>
+                    <button class="btn-edit">
+                        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        Bearbeiten
+                    </button>
+                </div>
+                <div class="field-grid">
+                    <div class="field">
+                        <span class="field-label">E-Mail-Adresse</span>
+                        <span class="field-value">
+                            anna.mader@example.de
+                            <span class="verified">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                verifiziert
+                            </span>
+                        </span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Alternative E-Mail</span>
+                        <span class="field-value">anna.mader.work@example.de</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Mobilnummer</span>
+                        <span class="field-value">
+                            +49 151 2345 6789
+                            <span class="verified">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                verifiziert
+                            </span>
+                        </span>
+                    </div>
+                    <div class="field">
+                        <span class="field-label">Festnetz</span>
+                        <span class="field-value">+49 30 28 04 47 19</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment -->
+            <div class="card" id="payment">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                        <h2>Zahlungsmethode</h2>
+                    </div>
+                    <button class="btn-edit">
+                        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        Ändern
+                    </button>
+                </div>
+
+                <div class="payment-layout">
+                    <!-- American Express card -->
+                    <div class="credit-card">
+                        <div class="cc-top">
+                            <div class="cc-chip"></div>
+                            <div class="cc-logo-amex">
+                                <div class="amex-top">AMERICAN</div>
+                                <div class="amex-mid">EXPRESS</div>
+                                <div class="amex-bot">●●●</div>
+                            </div>
+                        </div>
+                        <div class="cc-number">3782 •••••• 51004</div>
+                        <div class="cc-bottom">
+                            <div>
+                                <div class="cc-label">Karteninhaber</div>
+                                <div class="cc-name">ANNA MADER</div>
+                            </div>
+                            <div>
+                                <div class="cc-label">Gültig bis</div>
+                                <div class="cc-expiry">08/28</div>
+                            </div>
+                        </div>
+                        <div class="cc-brand-bottom">Centurion</div>
+                    </div>
+
+                    <div class="payment-details">
+                        <div class="payment-row">
+                            <span class="label">Zahlungsart</span>
+                            <span class="value">Kreditkarte (American Express)</span>
+                        </div>
+                        <div class="payment-row">
+                            <span class="label">Rechnungsadresse</span>
+                            <span class="value">Friedrichstraße 112, 10117 Berlin</span>
+                        </div>
+                        <div class="payment-row">
+                            <span class="label">Abrechnungszyklus</span>
+                            <span class="value">Monatlich, jeweils am 1.</span>
+                        </div>
+                        <div class="payment-row">
+                            <span class="label">Nächste Abbuchung</span>
+                            <span class="value">01.05.2026 · 14,99 €</span>
+                        </div>
+                        <div class="payment-row">
+                            <span class="label">Status</span>
+                            <span class="value"><span class="payment-status">Aktiv</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billing history -->
+            <div class="card" id="billing">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                        <h2>Letzte Rechnungen</h2>
+                    </div>
+                    <a href="#" class="btn-edit" style="text-decoration:none;">Alle anzeigen</a>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-row">
+                        <span class="label">01.04.2026 · GigaTV Premium</span>
+                        <span class="value">14,99 € <span class="payment-status" style="margin-left:10px;">Bezahlt</span></span>
+                    </div>
+                    <div class="payment-row">
+                        <span class="label">01.03.2026 · GigaTV Premium</span>
+                        <span class="value">14,99 € <span class="payment-status" style="margin-left:10px;">Bezahlt</span></span>
+                    </div>
+                    <div class="payment-row">
+                        <span class="label">01.02.2026 · GigaTV Premium</span>
+                        <span class="value">14,99 € <span class="payment-status" style="margin-left:10px;">Bezahlt</span></span>
+                    </div>
+                    <div class="payment-row">
+                        <span class="label">01.01.2026 · GigaTV Premium</span>
+                        <span class="value">14,99 € <span class="payment-status" style="margin-left:10px;">Bezahlt</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preferences — placeholder for Preference Center integration -->
+            <div class="card" id="preferences">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94 0 .31.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                        <h2>Präferenzen &amp; Einwilligungen</h2>
+                    </div>
+                </div>
+
+                <!-- Integration hook: replace the block below with your Preference Center embed -->
+                <div id="preference-center-mount">
+                    <div class="pref-row">
+                        <div class="pref-text">
+                            <h4>Produktneuigkeiten per E-Mail</h4>
+                            <p>Informationen zu neuen Serien, Filmen und Sender-Highlights auf GigaTV.</p>
+                        </div>
+                        <div class="toggle on" data-purpose="email-product-news" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="pref-row">
+                        <div class="pref-text">
+                            <h4>Personalisierte Empfehlungen</h4>
+                            <p>Basierend auf Ihrem Seh-Verhalten Sendungen und Inhalte empfehlen.</p>
+                        </div>
+                        <div class="toggle on" data-purpose="personalized-recommendations" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="pref-row">
+                        <div class="pref-text">
+                            <h4>Marketing-Benachrichtigungen per SMS</h4>
+                            <p>Aktionen und Angebote direkt aufs Handy.</p>
+                        </div>
+                        <div class="toggle" data-purpose="sms-marketing" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="pref-row">
+                        <div class="pref-text">
+                            <h4>Analyse &amp; Produktverbesserung</h4>
+                            <p>Nutzungsdaten anonymisiert verwenden, um GigaTV zu verbessern.</p>
+                        </div>
+                        <div class="toggle on" data-purpose="analytics" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="pref-row">
+                        <div class="pref-text">
+                            <h4>Drittanbieter-Werbung</h4>
+                            <p>Relevante Werbung von Partnern basierend auf Ihren Interessen.</p>
+                        </div>
+                        <div class="toggle" data-purpose="third-party-ads" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                </div>
+
+                <div class="preferences-placeholder" style="margin-top:24px;">
+                    <h3>Integrationspunkt: Preference Center</h3>
+                    <p>Dieser Bereich (<span class="hook-id">#preference-center-mount</span>) kann durch ein eingebettetes Preference Center ersetzt werden.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="page-footer">
+        <div class="footer-links-row">
+            <a href="#">Datenschutz</a>
+            <a href="#">Cookie-Einstellungen</a>
+            <a href="#">Impressum</a>
+            <a href="#">AGB</a>
+            <a href="#">Kontakt</a>
+        </div>
+        <div>© 2026 Vodafone GmbH. Alle Rechte vorbehalten.</div>
+    </footer>
+</body>
+</html>
