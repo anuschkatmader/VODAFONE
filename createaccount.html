@@ -1,20 +1,28 @@
+<!-- Description: Simple demo page for a OneTrust Embedded Form workshop (basic HTML attributes are displayed at the top for training purposes, and the consent form is loaded automatically at the bottom using InstallCP so users can clearly identify the key OneTrust elements). -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Vodafone GigaTV · Create an Account</title>
+  <title>OneTrust Embedded Form Demo</title>
 
   <!-- =========================================================
-       ONETRUST REQUIRED SCRIPTS
-       DO NOT MODIFY ORDER OR BEHAVIOR
+       1) ONETRUST REQUIRED SCRIPTS
+       These scripts are required for the embedded OneTrust form.
+       For workshop purposes:
+       - Leave this section as-is
+       - Think of it as the "OneTrust loader"
+       - Make sure to replace with your own ID's (from your trial environment)
   ========================================================== -->
+
+  <!-- Required OneTrust bootstrap -->
   <script>
     window.OtSdk = window.OtSdk || function () {
       (OtSdk.q = OtSdk.q || []).push(arguments);
     };
   </script>
 
+  <!-- OneTrust embedded form library -->
   <script
     src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
     data-id="89af9315-196c-45ad-88ea-1b8ec3fe5a51"
@@ -22,197 +30,216 @@
   ></script>
 
   <!-- =========================================================
-       VISUAL THEME — Vodafone GigaTV
-       (Structure preserved, branding adapted)
+       2) PAGE STYLES
+       This section only controls how the page looks.
+       It does NOT load the OneTrust form.
   ========================================================== -->
   <style>
     :root {
-      --bg: #ffffff;
-      --card: rgba(255,255,255,0.9);
-      --text: #1a1a1a;
-      --muted: #6b6b6b;
-      --primary: #e60000;
-      --primary-dark: #b50000;
-      --accent-soft: rgba(230,0,0,0.1);
-      --border: rgba(0,0,0,0.08);
-      --radius: 22px;
-      --shadow: 0 18px 40px rgba(0,0,0,0.12);
-      --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #111;
+      --muted: #666;
+      --primary: #2563eb;
+      --border: #e5e7eb;
+      --danger: #d9534f;
+      --radius: 12px;
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
-      font-family: var(--font);
+      padding: 40px 16px;
+      background: var(--bg);
       color: var(--text);
-      background:
-        radial-gradient(circle at top right, rgba(230,0,0,0.18), transparent 40%),
-        linear-gradient(180deg, #ffffff, #f5f5f5);
+      font-family: var(--font);
+      display: flex;
+      justify-content: center;
     }
 
-    .page-shell {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 28px 18px 42px;
-    }
-
-    /* =========================================================
-       HERO — Vodafone GigaTV Context
-    ========================================================== */
-    .hero {
-      border-radius: 32px;
-      padding: 36px;
-      background:
-        linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7)),
-        linear-gradient(135deg, #e60000, #8b0000);
-      color: #fff;
-      box-shadow: var(--shadow);
-    }
-
-    .brand-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.15);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .hero h1 {
-      margin: 22px 0 12px;
-      font-size: clamp(32px, 5vw, 56px);
-      letter-spacing: -0.04em;
-    }
-
-    .hero p {
-      max-width: 640px;
-      font-size: 15px;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.9);
-    }
-
-    /* =========================================================
-       EMAIL ENTRY — MUST STAY FIRST
-    ========================================================== */
-    .email-banner {
-      margin-top: -48px;
-      display: grid;
-      grid-template-columns: 1.4fr 0.6fr;
-      gap: 18px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .glass-card {
-      background: var(--card);
-      border-radius: 26px;
-      padding: 24px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-    }
-
-    .eyebrow {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 8px;
-    }
-
-    input {
+    .card {
       width: 100%;
-      padding: 14px 16px;
+      max-width: 720px;
+      background: var(--card);
+      padding: 24px;
       border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .sub {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .section-title {
+      margin: 24px 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      margin: 0 0 6px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius);
       border: 1px solid var(--border);
       font: inherit;
-    }
-
-    /* =========================================================
-       LAYOUT GRID (PRESERVED)
-    ========================================================== */
-    .layout {
-      display: grid;
-      grid-template-columns: 1.3fr 0.7fr;
-      gap: 22px;
-      margin-top: 28px;
-      align-items: start;
-    }
-
-    .panel {
-      border-radius: 28px;
       background: #fff;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
     }
 
-    .panel-inner {
-      padding: 26px;
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
     }
 
-    .panel-title {
-      font-size: 26px;
-      letter-spacing: -0.03em;
-      margin-bottom: 6px;
-    }
-
-    .panel-sub {
-      font-size: 14px;
+    .hint {
+      margin-top: 10px;
+      font-size: 13px;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.5;
+    }
+
+    .demo-box {
+      margin-top: 8px;
+      padding: 16px;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      background: #fafafa;
     }
 
     /* =========================================================
-       PRODUCT / CART → GIGATV
-    ========================================================== */
-    .product-visual {
-      height: 340px;
-      border-radius: 24px;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.6)),
-        linear-gradient(135deg, #111, #333);
-      color: #fff;
-      padding: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .price-chip {
-      background: rgba(255,255,255,0.15);
-      padding: 16px 18px;
-      border-radius: 22px;
-      backdrop-filter: blur(12px);
-      text-align: right;
+       ONETRUST CONTAINER
+       This is where OneTrust will render the consent form.
+       The JS will target this exact element.
+  ========================================================== */
+    #ot-container {
+      margin-top: 18px;
     }
 
     /* =========================================================
-       CONSENT — ONETRUST (UNCHANGED FUNCTIONALLY)
-    ========================================================== */
-    #ot-container { margin-top: 12px; }
-
-    /* =========================================================
-       PAYMENT — PREFILLED
-    ========================================================== */
-    .payment-card {
-      background: linear-gradient(135deg, #e60000, #8b0000);
-      color: #fff;
-      padding: 22px;
-      border-radius: 24px;
-      margin-bottom: 18px;
+       OPTIONAL ONETRUST VISUAL CLEANUP
+       These styles make the OneTrust form look simpler for demos.
+       They do not change the functional behavior.
+  ========================================================== */
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-family: inherit !important;
+      color: inherit !important;
     }
 
-    /* =========================================================
-       RESPONSIVE
-    ========================================================== */
-    @media (max-width: 960px) {
-      .email-banner,
-      .layout {
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container span.ot-label {
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      font-weight: 400 !important;
+      color: var(--muted) !important;
+    }
+
+    #ot-container input[type="checkbox"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ot-container .otwf-chkbox label {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    #ot-container .otwf-chkbox label::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      margin-top: 2px;
+      transition: all 0.15s ease;
+      background: #fff;
+    }
+
+    #ot-container input[type="checkbox"]:checked + label::before {
+      border-color: var(--primary);
+      background: radial-gradient(circle at center, var(--primary) 45%, transparent 47%);
+    }
+
+    #ot-container input[type="checkbox"]:focus + label::before {
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    .ot-error {
+      color: var(--danger) !important;
+      font-size: 13px !important;
+      margin-top: 4px !important;
+    }
+
+    .ot-submit {
+      width: 100% !important;
+      margin-top: 16px !important;
+      padding: 14px !important;
+      border-radius: var(--radius) !important;
+      border: 1px solid var(--border) !important;
+      background: #fff !important;
+      color: var(--text) !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+    }
+
+    .ot-submit:hover {
+      background: #f9f9f9 !important;
+    }
+
+    @media (max-width: 640px) {
+      .field-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -220,102 +247,96 @@
 </head>
 
 <body>
-<main class="page-shell">
-
-  <!-- HERO -->
-  <section class="hero">
-    <span class="brand-chip">Vodafone GigaTV</span>
-    <h1>Create your Vodafone GigaTV account</h1>
-    <p>
-      Set up your account, review your GigaTV subscription, manage consent,
-      and confirm your payment — all in one smooth experience.
+  <!-- =========================================================
+       3) PAGE HTML
+       This is the visible page content.
+       We show:
+       - Simple HTML fields first
+       - The OneTrust container at the bottom
+  ========================================================== -->
+  <section class="card">
+    <h1>Embedded Form Demo</h1>
+    <p class="sub">
+      This page shows standard HTML fields first and the OneTrust embedded consent form underneath.
     </p>
+
+    <!-- Standard HTML fields -->
+    <div class="section-title">Example HTML Fields</div>
+
+    <div class="field-grid">
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" type="text" placeholder="John Smith" />
+      </div>
+
+      <div class="field">
+        <label for="nationality">Nationality</label>
+        <input id="nationality" type="text" placeholder="Spanish" />
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <!-- Keep this ID as requested -->
+        <input id="email" type="email" placeholder="you@example.com" required />
+      </div>
+
+      <div class="field">
+        <label for="country">Country</label>
+        <input id="country" type="text" placeholder="Spain" />
+      </div>
+
+      <div class="field full">
+        <label for="notes">Additional Notes</label>
+        <input id="notes" type="text" placeholder="Extra attribute for the demo" />
+      </div>
+    </div>
+
+    <!-- OneTrust area -->
+    <div class="section-title">OneTrust Embedded Form</div>
+
+    <div class="demo-box">
+      <div class="hint">
+        This box contains the <strong>OneTrust target container</strong>.  
+        The consent form will be inserted here automatically using <strong>InstallCP()</strong>.
+      </div>
+
+      <!-- IMPORTANT:
+           OneTrust renders the consent form inside this div -->
+      <div id="ot-container"></div>
+    </div>
   </section>
 
-  <!-- EMAIL (FIRST INTERACTION) -->
-  <section class="email-banner">
-    <div class="glass-card">
-      <p class="eyebrow">Account Email</p>
-      <h2>Start with your email address</h2>
-      <input
-        id="email"
-        type="email"
-        value="demo.user@vodafone.com"
-        placeholder="you@email.com"
-        required
-      />
-    </div>
+  <!-- =========================================================
+       4) PAGE JAVASCRIPT
+       This section controls the behavior.
+       For the workshop, the key idea is:
+       - Wait until OneTrust is ready
+       - Call InstallCP()
+       - Mount the form into #ot-container
+  ========================================================== -->
+  <script>
+    /* The Consent Profile ID to load */
+    const CP_ID = "6ed87545-c4ba-4dc1-ac8a-17fb30a4f110";
 
-    <div class="glass-card">
-      <p class="eyebrow">Order Snapshot</p>
-      <strong>Vodafone GigaTV</strong><br/>
-      Includes TV box, streaming apps, and premium channels
-    </div>
-  </section>
+    /* Wait until the OneTrust library is fully available */
+    function whenOTReady(callback) {
+      const timer = setInterval(() => {
+        if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+          clearInterval(timer);
+          callback();
+        }
+      }, 80);
+    }
 
-  <!-- MAIN CONTENT -->
-  <section class="layout">
-
-    <!-- LEFT -->
-    <div>
-      <article class="panel">
-        <div class="panel-inner">
-          <p class="eyebrow">Your Order</p>
-          <h2 class="panel-title">Vodafone GigaTV Subscription</h2>
-          <p class="panel-sub">
-            A complete entertainment experience with live TV, on‑demand,
-            and streaming services.
-          </p>
-
-          <div class="product-visual">
-            <div>
-              <h3>GigaTV Box</h3>
-              <p>All your entertainment in one place</p>
-            </div>
-            <div class="price-chip">
-              <span>Monthly price</span>
-              <strong>€19.99</strong>
-            </div>
-          </div>
-        </div>
-      </article>
-    </div>
-
-    <!-- RIGHT -->
-    <div>
-      <!-- CONSENT -->
-      <article class="panel">
-        <div class="panel-inner">
-          <p class="eyebrow">Privacy & Consent</p>
-          <h2 class="panel-title">Manage your preferences</h2>
-          <p class="panel-sub">
-            The consent form loads automatically and behaves exactly as before.
-          </p>
-
-          <div id="ot-container"></div>
-        </div>
-      </article>
-
-      <!-- PAYMENT -->
-      <article class="panel" style="margin-top:22px;">
-        <div class="panel-inner">
-          <p class="eyebrow">Payment</p>
-          <h2 class="panel-title">Payment method</h2>
-
-          <div class="payment-card">
-            <small>Prefilled for demo</small>
-            <strong>4242 4242 4242 4242</strong>
-            <div>Demo User · Visa · 04/29</div>
-          </div>
-
-          <input id="cc-name" value="Demo User"/>
-          <input id="cc-number" value="4242 4242 4242 4242"/>
-        </div>
-      </article>
-    </div>
-
-  </section>
-</main>
+    /* When the page is ready, load the OneTrust form automatically */
+    window.addEventListener("DOMContentLoaded", () => {
+      whenOTReady(() => {
+        OneTrust.webform.InstallCP(CP_ID, {
+          target: "#ot-container"
+        });
+      });
+    });
+  </script>
 </body>
 </html>
 ``
