@@ -1,425 +1,321 @@
-<!DOCTYPE html>
-
-<html lang="de">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konto erstellen – GigaTV Vodafone</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-        }
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Vodafone GigaTV · Create an Account</title>
 
-```
+  <!-- =========================================================
+       ONETRUST REQUIRED SCRIPTS
+       DO NOT MODIFY ORDER OR BEHAVIOR
+  ========================================================== -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="89af9315-196c-45ad-88ea-1b8ec3fe5a51"
+    worker="https://consent-api.onetrust.com"
+  ></script>
+
+  <!-- =========================================================
+       VISUAL THEME — Vodafone GigaTV
+       (Structure preserved, branding adapted)
+  ========================================================== -->
+  <style>
     :root {
-        --vf-red: #e60000;
-        --vf-red-dark: #bd0000;
-        --vf-black: #0d0d0d;
-        --vf-bg: #1a1a1a;
-        --vf-bg-light: #262626;
-        --vf-text: #ffffff;
-        --vf-text-muted: #b3b3b3;
-        --vf-border: rgba(255, 255, 255, 0.08);
+      --bg: #ffffff;
+      --card: rgba(255,255,255,0.9);
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --primary: #e60000;
+      --primary-dark: #b50000;
+      --accent-soft: rgba(230,0,0,0.1);
+      --border: rgba(0,0,0,0.08);
+      --radius: 22px;
+      --shadow: 0 18px 40px rgba(0,0,0,0.12);
+      --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
-    html, body {
-        background: var(--vf-black);
-        color: var(--vf-text);
-        font-family: "Vodafone Rg", "Helvetica Neue", Arial, sans-serif;
-        min-height: 100vh;
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(230,0,0,0.18), transparent 40%),
+        linear-gradient(180deg, #ffffff, #f5f5f5);
     }
 
-    /* ---------- Header ---------- */
-    header.top-bar {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: linear-gradient(to bottom, rgba(13,13,13,0.98), rgba(13,13,13,0.85));
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--vf-border);
+    .page-shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px 18px 42px;
     }
 
-    .top-bar-inner {
-        display: flex;
-        align-items: center;
-        height: 68px;
-        padding: 0 24px;
-        gap: 16px;
+    /* =========================================================
+       HERO — Vodafone GigaTV Context
+    ========================================================== */
+    .hero {
+      border-radius: 32px;
+      padding: 36px;
+      background:
+        linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7)),
+        linear-gradient(135deg, #e60000, #8b0000);
+      color: #fff;
+      box-shadow: var(--shadow);
     }
 
-    .logo-link {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        text-decoration: none;
-        color: inherit;
+    .brand-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.15);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
 
-    .vodafone-logo {
-        height: 32px;
-        width: auto;
+    .hero h1 {
+      margin: 22px 0 12px;
+      font-size: clamp(32px, 5vw, 56px);
+      letter-spacing: -0.04em;
     }
 
-    .brand-divider {
-        width: 1px;
-        height: 26px;
-        background: rgba(255,255,255,0.18);
+    .hero p {
+      max-width: 640px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.9);
     }
 
-    .brand-subtitle {
-        font-size: 20px;
-        font-weight: 700;
-        letter-spacing: -0.3px;
+    /* =========================================================
+       EMAIL ENTRY — MUST STAY FIRST
+    ========================================================== */
+    .email-banner {
+      margin-top: -48px;
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      gap: 18px;
+      position: relative;
+      z-index: 2;
     }
 
-    /* ---------- Page layout ---------- */
-    .page-wrapper {
-        min-height: calc(100vh - 68px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 48px 24px;
-        background: radial-gradient(ellipse at 60% 0%, rgba(230,0,0,0.07) 0%, transparent 60%);
+    .glass-card {
+      background: var(--card);
+      border-radius: 26px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
     }
 
-    .card {
-        background: var(--vf-bg);
-        border: 1px solid var(--vf-border);
-        border-radius: 12px;
-        padding: 48px;
-        width: 100%;
-        max-width: 480px;
-        box-shadow: 0 16px 60px rgba(0,0,0,0.6);
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 8px;
     }
 
-    /* ---------- Card header ---------- */
-    .card-eyebrow {
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        color: var(--vf-red);
-        margin-bottom: 10px;
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      font: inherit;
     }
 
-    .card-title {
-        font-size: 28px;
-        font-weight: 700;
-        letter-spacing: -0.5px;
-        margin-bottom: 6px;
+    /* =========================================================
+       LAYOUT GRID (PRESERVED)
+    ========================================================== */
+    .layout {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 22px;
+      margin-top: 28px;
+      align-items: start;
     }
 
-    .card-subtitle {
-        font-size: 14px;
-        color: var(--vf-text-muted);
-        margin-bottom: 36px;
-        line-height: 1.5;
+    .panel {
+      border-radius: 28px;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
     }
 
-    /* ---------- Form ---------- */
-    .form-group {
-        margin-bottom: 20px;
+    .panel-inner {
+      padding: 26px;
     }
 
-    label {
-        display: block;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--vf-text-muted);
-        margin-bottom: 8px;
-        letter-spacing: 0.2px;
+    .panel-title {
+      font-size: 26px;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
     }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="tel"] {
-        width: 100%;
-        background: var(--vf-bg-light);
-        border: 1px solid var(--vf-border);
-        border-radius: 8px;
-        padding: 13px 16px;
-        font-size: 15px;
-        font-family: inherit;
-        color: var(--vf-text);
-        outline: none;
-        transition: border-color 0.15s;
+    .panel-sub {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
     }
 
-    input:focus {
-        border-color: var(--vf-red);
+    /* =========================================================
+       PRODUCT / CART → GIGATV
+    ========================================================== */
+    .product-visual {
+      height: 340px;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.6)),
+        linear-gradient(135deg, #111, #333);
+      color: #fff;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
     }
 
-    input::placeholder {
-        color: rgba(255,255,255,0.25);
+    .price-chip {
+      background: rgba(255,255,255,0.15);
+      padding: 16px 18px;
+      border-radius: 22px;
+      backdrop-filter: blur(12px);
+      text-align: right;
     }
 
-    /* Two-column row */
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
+    /* =========================================================
+       CONSENT — ONETRUST (UNCHANGED FUNCTIONALLY)
+    ========================================================== */
+    #ot-container { margin-top: 12px; }
+
+    /* =========================================================
+       PAYMENT — PREFILLED
+    ========================================================== */
+    .payment-card {
+      background: linear-gradient(135deg, #e60000, #8b0000);
+      color: #fff;
+      padding: 22px;
+      border-radius: 24px;
+      margin-bottom: 18px;
     }
 
-    /* ---------- Divider ---------- */
-    .form-divider {
-        height: 1px;
-        background: var(--vf-border);
-        margin: 28px 0;
+    /* =========================================================
+       RESPONSIVE
+    ========================================================== */
+    @media (max-width: 960px) {
+      .email-banner,
+      .layout {
+        grid-template-columns: 1fr;
+      }
     }
-
-    /* ---------- Consent notice ---------- */
-    .consent-box {
-        background: rgba(230,0,0,0.06);
-        border: 1px solid rgba(230,0,0,0.2);
-        border-radius: 8px;
-        padding: 16px;
-        margin-bottom: 24px;
-        font-size: 13px;
-        color: var(--vf-text-muted);
-        line-height: 1.6;
-    }
-
-    .consent-box strong {
-        color: var(--vf-text);
-        display: block;
-        margin-bottom: 4px;
-        font-size: 13px;
-    }
-
-    .consent-box a {
-        color: var(--vf-red);
-        text-decoration: none;
-    }
-
-    .consent-box a:hover {
-        text-decoration: underline;
-    }
-
-    /* Checkbox row */
-    .checkbox-group {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        margin-bottom: 16px;
-    }
-
-    .checkbox-group input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        margin-top: 2px;
-        accent-color: var(--vf-red);
-        flex-shrink: 0;
-        cursor: pointer;
-    }
-
-    .checkbox-group label {
-        font-size: 13px;
-        font-weight: 400;
-        color: var(--vf-text-muted);
-        margin-bottom: 0;
-        line-height: 1.5;
-        cursor: pointer;
-    }
-
-    .checkbox-group label a {
-        color: var(--vf-red);
-        text-decoration: none;
-    }
-
-    .checkbox-group label a:hover {
-        text-decoration: underline;
-    }
-
-    /* ---------- Submit button ---------- */
-    .btn-submit {
-        width: 100%;
-        background: var(--vf-red);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 15px;
-        font-size: 15px;
-        font-weight: 700;
-        font-family: inherit;
-        cursor: pointer;
-        transition: background 0.15s, transform 0.1s;
-        margin-top: 8px;
-        letter-spacing: 0.1px;
-    }
-
-    .btn-submit:hover {
-        background: var(--vf-red-dark);
-    }
-
-    .btn-submit:active {
-        transform: scale(0.98);
-    }
-
-    /* ---------- Footer link ---------- */
-    .card-footer {
-        text-align: center;
-        margin-top: 24px;
-        font-size: 13px;
-        color: var(--vf-text-muted);
-    }
-
-    .card-footer a {
-        color: var(--vf-red);
-        text-decoration: none;
-        font-weight: 600;
-    }
-
-    .card-footer a:hover {
-        text-decoration: underline;
-    }
-
-    /* ---------- Back link ---------- */
-    .back-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        color: var(--vf-text-muted);
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 500;
-        transition: color 0.15s;
-        margin-left: auto;
-    }
-
-    .back-link:hover {
-        color: var(--vf-text);
-    }
-
-    .back-link svg {
-        width: 16px;
-        height: 16px;
-        fill: currentColor;
-    }
-</style>
-```
-
+  </style>
 </head>
+
 <body>
+<main class="page-shell">
 
-```
-<!-- ========== HEADER ========== -->
-<header class="top-bar">
-    <div class="top-bar-inner">
-        <a href="index.html" class="logo-link">
-            <img class="vodafone-logo" src="images/vodafone-logo.svg" alt="Vodafone">
-            <div class="brand-divider"></div>
-            <div class="brand-subtitle">GigaTV</div>
-        </a>
-        <a href="index.html" class="back-link">
-            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-            Zurück
-        </a>
+  <!-- HERO -->
+  <section class="hero">
+    <span class="brand-chip">Vodafone GigaTV</span>
+    <h1>Create your Vodafone GigaTV account</h1>
+    <p>
+      Set up your account, review your GigaTV subscription, manage consent,
+      and confirm your payment — all in one smooth experience.
+    </p>
+  </section>
+
+  <!-- EMAIL (FIRST INTERACTION) -->
+  <section class="email-banner">
+    <div class="glass-card">
+      <p class="eyebrow">Account Email</p>
+      <h2>Start with your email address</h2>
+      <input
+        id="email"
+        type="email"
+        value="demo.user@vodafone.com"
+        placeholder="you@email.com"
+        required
+      />
     </div>
-</header>
 
-<!-- ========== MAIN ========== -->
-<div class="page-wrapper">
-    <div class="card">
-
-        <div class="card-eyebrow">GigaTV · Vodafone</div>
-        <h1 class="card-title">Konto erstellen</h1>
-        <p class="card-subtitle">Erstellen Sie Ihr persönliches GigaTV-Konto und genießen Sie Ihr Fernsehen neu gedacht.</p>
-
-        <!-- Personal details -->
-        <div class="form-row">
-            <div class="form-group">
-                <label for="firstname">Vorname</label>
-                <input type="text" id="firstname" placeholder="Anna">
-            </div>
-            <div class="form-group">
-                <label for="lastname">Nachname</label>
-                <input type="text" id="lastname" placeholder="Mader">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="email">E-Mail-Adresse</label>
-            <input type="email" id="email" placeholder="anna.mader@email.de">
-        </div>
-
-        <div class="form-group">
-            <label for="phone">Telefonnummer (optional)</label>
-            <input type="tel" id="phone" placeholder="+49 170 000 0000">
-        </div>
-
-        <div class="form-divider"></div>
-
-        <div class="form-group">
-            <label for="password">Passwort</label>
-            <input type="password" id="password" placeholder="Mindestens 8 Zeichen">
-        </div>
-
-        <div class="form-group">
-            <label for="password2">Passwort bestätigen</label>
-            <input type="password" id="password2" placeholder="Passwort wiederholen">
-        </div>
-
-        <div class="form-divider"></div>
-
-        <!-- Consent & data collection notice -->
-        <div class="consent-box">
-            <strong>Datenschutzhinweis</strong>
-            Ihre Daten werden gemäß der <a href="#">Datenschutzerklärung</a> von Vodafone GmbH verarbeitet und ausschließlich zur Kontoverwaltung und Verbesserung Ihres Nutzungserlebnisses verwendet.
-        </div>
-
-        <div class="checkbox-group">
-            <input type="checkbox" id="terms">
-            <label for="terms">Ich akzeptiere die <a href="#">Allgemeinen Geschäftsbedingungen</a> und die <a href="#">Datenschutzerklärung</a> von Vodafone GmbH.</label>
-        </div>
-
-        <div class="checkbox-group">
-            <input type="checkbox" id="marketing">
-            <label for="marketing">Ich möchte Angebote, Neuigkeiten und Empfehlungen von Vodafone GigaTV per E-Mail erhalten. (Optional)</label>
-        </div>
-
-        <button class="btn-submit" onclick="handleSubmit()">Konto erstellen</button>
-
-        <div class="card-footer">
-            Bereits ein Konto? <a href="account.html">Jetzt anmelden</a>
-        </div>
-
+    <div class="glass-card">
+      <p class="eyebrow">Order Snapshot</p>
+      <strong>Vodafone GigaTV</strong><br/>
+      Includes TV box, streaming apps, and premium channels
     </div>
-</div>
+  </section>
 
-<script>
-    function handleSubmit() {
-        const firstname = document.getElementById('firstname').value.trim();
-        const lastname  = document.getElementById('lastname').value.trim();
-        const email     = document.getElementById('email').value.trim();
-        const password  = document.getElementById('password').value;
-        const password2 = document.getElementById('password2').value;
-        const terms     = document.getElementById('terms').checked;
+  <!-- MAIN CONTENT -->
+  <section class="layout">
 
-        if (!firstname || !lastname || !email || !password) {
-            alert('Bitte füllen Sie alle Pflichtfelder aus.');
-            return;
-        }
-        if (password !== password2) {
-            alert('Die Passwörter stimmen nicht überein.');
-            return;
-        }
-        if (!terms) {
-            alert('Bitte akzeptieren Sie die AGB und Datenschutzerklärung.');
-            return;
-        }
+    <!-- LEFT -->
+    <div>
+      <article class="panel">
+        <div class="panel-inner">
+          <p class="eyebrow">Your Order</p>
+          <h2 class="panel-title">Vodafone GigaTV Subscription</h2>
+          <p class="panel-sub">
+            A complete entertainment experience with live TV, on‑demand,
+            and streaming services.
+          </p>
 
-        // TODO: Replace this with your actual form submission / collection point URL
-        // e.g. fetch('https://your-collection-endpoint.com/register', { method: 'POST', body: ... })
-        alert('Konto erfolgreich erstellt! Willkommen bei GigaTV, ' + firstname + '.');
-        window.location.href = 'account.html';
-    }
-</script>
-```
+          <div class="product-visual">
+            <div>
+              <h3>GigaTV Box</h3>
+              <p>All your entertainment in one place</p>
+            </div>
+            <div class="price-chip">
+              <span>Monthly price</span>
+              <strong>€19.99</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
 
+    <!-- RIGHT -->
+    <div>
+      <!-- CONSENT -->
+      <article class="panel">
+        <div class="panel-inner">
+          <p class="eyebrow">Privacy & Consent</p>
+          <h2 class="panel-title">Manage your preferences</h2>
+          <p class="panel-sub">
+            The consent form loads automatically and behaves exactly as before.
+          </p>
+
+          <div id="ot-container"></div>
+        </div>
+      </article>
+
+      <!-- PAYMENT -->
+      <article class="panel" style="margin-top:22px;">
+        <div class="panel-inner">
+          <p class="eyebrow">Payment</p>
+          <h2 class="panel-title">Payment method</h2>
+
+          <div class="payment-card">
+            <small>Prefilled for demo</small>
+            <strong>4242 4242 4242 4242</strong>
+            <div>Demo User · Visa · 04/29</div>
+          </div>
+
+          <input id="cc-name" value="Demo User"/>
+          <input id="cc-number" value="4242 4242 4242 4242"/>
+        </div>
+      </article>
+    </div>
+
+  </section>
+</main>
 </body>
 </html>
+``
