@@ -1,164 +1,196 @@
-<!-- Description: Simple demo page for a OneTrust Embedded Form workshop (basic HTML attributes are displayed at the top for training purposes, and the consent form is loaded automatically at the bottom using InstallCP so users can clearly identify the key OneTrust elements). -->
 <!doctype html>
-<html lang="en">
+
+<html lang="de">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>OneTrust Embedded Form Demo</title>
+  <title>Konto erstellen – GigaTV Vodafone</title>
 
   <!-- =========================================================
-       1) ONETRUST REQUIRED SCRIPTS
-       These scripts are required for the embedded OneTrust form.
-       For workshop purposes:
-       - Leave this section as-is
-       - Think of it as the "OneTrust loader"
-       - Make sure to replace with your own ID's (from your trial environment)
+       1) ONETRUST REQUIRED SCRIPTS — DO NOT MODIFY
   ========================================================== -->
 
-  <!-- Required OneTrust bootstrap -->
   <script>
     window.OtSdk = window.OtSdk || function () {
       (OtSdk.q = OtSdk.q || []).push(arguments);
     };
   </script>
 
-  <!-- OneTrust embedded form library -->
   <script
     src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
     data-id="89af9315-196c-45ad-88ea-1b8ec3fe5a51"
     worker="https://consent-api.onetrust.com"
   ></script>
 
-  <!-- =========================================================
-       2) PAGE STYLES
-       This section only controls how the page looks.
-       It does NOT load the OneTrust form.
-  ========================================================== -->
   <style>
-    :root {
-      --bg: #f4f6f8;
-      --card: #ffffff;
-      --text: #111;
-      --muted: #666;
-      --primary: #2563eb;
-      --border: #e5e7eb;
-      --danger: #d9534f;
-      --radius: 12px;
-      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
     }
 
-    body {
-      margin: 0;
-      padding: 40px 16px;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
+    :root {
+      --vf-red:        #e60000;
+      --vf-red-dark:   #bd0000;
+      --vf-black:      #0d0d0d;
+      --vf-bg:         #1a1a1a;
+      --vf-bg-light:   #262626;
+      --vf-bg-card:    #1e1e1e;
+      --vf-text:       #ffffff;
+      --vf-text-muted: #b3b3b3;
+      --vf-border:     rgba(255, 255, 255, 0.08);
+      --vf-font:       "Vodafone Rg", "Helvetica Neue", Arial, sans-serif;
+      --vf-radius:     8px;
+    }
+
+    html, body {
+      background: var(--vf-black);
+      color: var(--vf-text);
+      font-family: var(--vf-font);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header.top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(to bottom, rgba(13,13,13,0.98), rgba(13,13,13,0.85));
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--vf-border);
+    }
+
+    .top-bar-inner {
       display: flex;
+      align-items: center;
+      height: 68px;
+      padding: 0 32px;
+      gap: 16px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+      flex-shrink: 0;
+    }
+
+    .vodafone-logo { height: 32px; width: auto; }
+
+    .brand-divider {
+      width: 1px;
+      height: 26px;
+      background: rgba(255,255,255,0.18);
+    }
+
+    .brand-subtitle {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--vf-text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      margin-left: auto;
+      transition: color 0.15s;
+    }
+
+    .back-link:hover { color: var(--vf-text); }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+
+    /* ── Page layout ── */
+    .page-wrapper {
+      min-height: calc(100vh - 68px);
+      display: flex;
+      align-items: flex-start;
       justify-content: center;
+      padding: 56px 24px 80px;
+      background: radial-gradient(ellipse at 70% 0%, rgba(230,0,0,0.06) 0%, transparent 55%);
     }
 
     .card {
+      background: var(--vf-bg-card);
+      border: 1px solid var(--vf-border);
+      border-radius: 14px;
+      padding: 48px;
       width: 100%;
-      max-width: 720px;
-      background: var(--card);
-      padding: 24px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      max-width: 560px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
 
-    h1 {
-      margin: 0 0 8px;
-      font-size: 22px;
-      font-weight: 800;
-    }
-
-    .sub {
-      margin: 0 0 24px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .section-title {
-      margin: 24px 0 10px;
-      font-size: 14px;
+    .card-eyebrow {
+      font-size: 11px;
       font-weight: 700;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--muted);
+      color: var(--vf-red);
+      margin-bottom: 10px;
     }
 
-    .field-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+    .card-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      line-height: 1.05;
     }
 
-    .field {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .field.full {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      margin: 0 0 6px;
-      font-weight: 600;
+    .card-subtitle {
       font-size: 14px;
+      color: var(--vf-text-muted);
+      margin-bottom: 36px;
+      line-height: 1.6;
     }
 
-    input,
-    select {
-      width: 100%;
-      padding: 12px;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      font: inherit;
-      background: #fff;
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--vf-text-muted);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--vf-border);
     }
 
-    input:focus,
-    select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    .divider {
+      height: 1px;
+      background: var(--vf-border);
+      margin: 32px 0;
     }
 
-    .hint {
-      margin-top: 10px;
+    .card-footer {
+      text-align: center;
       font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
+      color: var(--vf-text-muted);
     }
 
-    .demo-box {
-      margin-top: 8px;
-      padding: 16px;
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      background: #fafafa;
+    .card-footer a {
+      color: var(--vf-red);
+      text-decoration: none;
+      font-weight: 600;
     }
 
-    /* =========================================================
-       ONETRUST CONTAINER
-       This is where OneTrust will render the consent form.
-       The JS will target this exact element.
-  ========================================================== */
-    #ot-container {
-      margin-top: 18px;
-    }
+    .card-footer a:hover { text-decoration: underline; }
 
     /* =========================================================
-       OPTIONAL ONETRUST VISUAL CLEANUP
-       These styles make the OneTrust form look simpler for demos.
-       They do not change the functional behavior.
-  ========================================================== */
+       ONETRUST FORM STYLING
+       Reskins whatever OneTrust renders into #ot-container
+    ========================================================== */
+
+    #ot-container { margin-top: 4px; min-height: 40px; }
+
+    /* Strip OT white backgrounds */
     .ot-consent-inline,
     .otwf-content,
     .ot-form,
@@ -168,157 +200,223 @@
       border: none !important;
       box-shadow: none !important;
       padding: 0 !important;
-      font-family: inherit !important;
-      color: inherit !important;
+      font-family: var(--vf-font) !important;
+      color: var(--vf-text) !important;
     }
 
-    #ot-container .ot-label,
+    /* Labels */
     #ot-container label,
+    #ot-container .ot-label,
     #ot-container span.ot-label {
-      font-size: 14px !important;
-      line-height: 1.5 !important;
-      font-weight: 400 !important;
-      color: var(--muted) !important;
+      font-family: var(--vf-font) !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: var(--vf-text-muted) !important;
+      margin-bottom: 8px !important;
+      display: block !important;
+      letter-spacing: 0.2px !important;
     }
 
+    /* Text inputs */
+    #ot-container input[type="text"],
+    #ot-container input[type="email"],
+    #ot-container input[type="tel"],
+    #ot-container input[type="password"],
+    #ot-container input[type="number"],
+    #ot-container select,
+    #ot-container textarea {
+      width: 100% !important;
+      background: var(--vf-bg-light) !important;
+      border: 1px solid var(--vf-border) !important;
+      border-radius: var(--vf-radius) !important;
+      padding: 13px 16px !important;
+      font-size: 15px !important;
+      font-family: var(--vf-font) !important;
+      color: var(--vf-text) !important;
+      outline: none !important;
+      transition: border-color 0.15s !important;
+      margin-bottom: 16px !important;
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      box-shadow: none !important;
+    }
+
+    #ot-container input[type="text"]:focus,
+    #ot-container input[type="email"]:focus,
+    #ot-container input[type="tel"]:focus,
+    #ot-container select:focus {
+      border-color: var(--vf-red) !important;
+    }
+
+    #ot-container input::placeholder {
+      color: rgba(255,255,255,0.22) !important;
+    }
+
+    /* Checkbox — hide native, style label */
     #ot-container input[type="checkbox"] {
       position: absolute !important;
       opacity: 0 !important;
       pointer-events: none !important;
     }
 
+    #ot-container .otwf-chkbox {
+      margin-bottom: 14px !important;
+      padding: 14px 16px !important;
+      background: rgba(230,0,0,0.05) !important;
+      border: 1px solid rgba(230,0,0,0.15) !important;
+      border-radius: var(--vf-radius) !important;
+    }
+
     #ot-container .otwf-chkbox label {
       display: flex !important;
-      align-items: flex-start;
-      gap: 10px;
-      cursor: pointer;
-      position: relative;
+      align-items: flex-start !important;
+      gap: 12px !important;
+      cursor: pointer !important;
+      font-size: 13px !important;
+      font-weight: 400 !important;
+      color: var(--vf-text-muted) !important;
+      margin-bottom: 0 !important;
+      line-height: 1.6 !important;
+      position: relative !important;
     }
 
     #ot-container .otwf-chkbox label::before {
-      content: "";
-      width: 18px;
-      height: 18px;
-      min-width: 18px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      margin-top: 2px;
-      transition: all 0.15s ease;
-      background: #fff;
+      content: "" !important;
+      width: 20px !important;
+      height: 20px !important;
+      min-width: 20px !important;
+      border-radius: 50% !important;
+      border: 2px solid rgba(255,255,255,0.2) !important;
+      background: var(--vf-bg-light) !important;
+      transition: all 0.15s ease !important;
+      margin-top: 1px !important;
+      flex-shrink: 0 !important;
     }
 
     #ot-container input[type="checkbox"]:checked + label::before {
-      border-color: var(--primary);
-      background: radial-gradient(circle at center, var(--primary) 45%, transparent 47%);
+      border-color: var(--vf-red) !important;
+      background: radial-gradient(circle at center, var(--vf-red) 45%, transparent 47%) !important;
+      box-shadow: 0 0 0 3px rgba(230,0,0,0.2) !important;
     }
 
     #ot-container input[type="checkbox"]:focus + label::before {
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      box-shadow: 0 0 0 3px rgba(230,0,0,0.2) !important;
     }
 
+    /* Error */
     .ot-error {
-      color: var(--danger) !important;
+      color: #ff6b6b !important;
       font-size: 13px !important;
       margin-top: 4px !important;
+      font-family: var(--vf-font) !important;
     }
 
+    /* Submit button */
     .ot-submit {
       width: 100% !important;
-      margin-top: 16px !important;
-      padding: 14px !important;
-      border-radius: var(--radius) !important;
-      border: 1px solid var(--border) !important;
-      background: #fff !important;
-      color: var(--text) !important;
+      margin-top: 20px !important;
+      padding: 15px !important;
+      border-radius: var(--vf-radius) !important;
+      border: none !important;
+      background: var(--vf-red) !important;
+      color: #ffffff !important;
+      font-size: 15px !important;
       font-weight: 700 !important;
+      font-family: var(--vf-font) !important;
       cursor: pointer !important;
+      transition: background 0.15s, transform 0.1s !important;
+      letter-spacing: 0.1px !important;
     }
 
     .ot-submit:hover {
-      background: #f9f9f9 !important;
+      background: var(--vf-red-dark) !important;
     }
 
+    .ot-submit:active {
+      transform: scale(0.98) !important;
+    }
+
+    /* Links inside OT form */
+    #ot-container a {
+      color: var(--vf-red) !important;
+      text-decoration: none !important;
+    }
+
+    #ot-container a:hover { text-decoration: underline !important; }
+
+    /* Mute OT branding */
+    #ot-container [class*="powered"],
+    #ot-container [class*="branding"] {
+      opacity: 0.25 !important;
+      font-size: 11px !important;
+      color: var(--vf-text-muted) !important;
+      text-align: center !important;
+      margin-top: 16px !important;
+    }
+
+    /* Responsive */
     @media (max-width: 640px) {
-      .field-grid {
-        grid-template-columns: 1fr;
-      }
+      .card { padding: 28px 20px; }
+      .page-wrapper { padding: 32px 16px 60px; }
+      .top-bar-inner { padding: 0 16px; }
     }
   </style>
+
 </head>
-
 <body>
-  <!-- =========================================================
-       3) PAGE HTML
-       This is the visible page content.
-       We show:
-       - Simple HTML fields first
-       - The OneTrust container at the bottom
-  ========================================================== -->
-  <section class="card">
-    <h1>Embedded Form Demo</h1>
-    <p class="sub">
-      This page shows standard HTML fields first and the OneTrust embedded consent form underneath.
-    </p>
 
-    <!-- Standard HTML fields -->
-    <div class="section-title">Example HTML Fields</div>
+  <!-- ========== HEADER ========== -->
 
-    <div class="field-grid">
-      <div class="field">
-        <label for="name">Name</label>
-        <input id="name" type="text" placeholder="John Smith" />
-      </div>
-
-      <div class="field">
-        <label for="nationality">Nationality</label>
-        <input id="nationality" type="text" placeholder="Spanish" />
-      </div>
-
-      <div class="field">
-        <label for="email">Email</label>
-        <!-- Keep this ID as requested -->
-        <input id="email" type="email" placeholder="you@example.com" required />
-      </div>
-
-      <div class="field">
-        <label for="country">Country</label>
-        <input id="country" type="text" placeholder="Spain" />
-      </div>
-
-      <div class="field full">
-        <label for="notes">Additional Notes</label>
-        <input id="notes" type="text" placeholder="Extra attribute for the demo" />
-      </div>
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <a href="index.html" class="logo-link">
+        <img class="vodafone-logo" src="images/vodafone-logo.svg" alt="Vodafone">
+        <div class="brand-divider"></div>
+        <div class="brand-subtitle">GigaTV</div>
+      </a>
+      <a href="index.html" class="back-link">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Zurück
+      </a>
     </div>
+  </header>
 
-    <!-- OneTrust area -->
-    <div class="section-title">OneTrust Embedded Form</div>
+  <!-- ========== MAIN ========== -->
 
-    <div class="demo-box">
-      <div class="hint">
-        This box contains the <strong>OneTrust target container</strong>.  
-        The consent form will be inserted here automatically using <strong>InstallCP()</strong>.
-      </div>
+  <div class="page-wrapper">
+    <div class="card">
 
-      <!-- IMPORTANT:
-           OneTrust renders the consent form inside this div -->
-      <div id="ot-container"></div>
-    </div>
-  </section>
+```
+  <div class="card-eyebrow">GigaTV · Vodafone</div>
+  <h1 class="card-title">Konto erstellen</h1>
+  <p class="card-subtitle">
+    Erstellen Sie Ihr persönliches GigaTV-Konto und genießen Sie Ihr Fernsehen neu gedacht.
+  </p>
+
+  <div class="section-label">Ihre Daten &amp; Einwilligungen</div>
+
+  <!-- OneTrust renders the full form here -->
+  <div id="ot-container"></div>
+
+  <div class="divider"></div>
+
+  <div class="card-footer">
+    Bereits ein Konto? <a href="account.html">Jetzt anmelden</a>
+  </div>
+
+</div>
+```
+
+  </div>
 
   <!-- =========================================================
-       4) PAGE JAVASCRIPT
-       This section controls the behavior.
-       For the workshop, the key idea is:
-       - Wait until OneTrust is ready
-       - Call InstallCP()
-       - Mount the form into #ot-container
+       4) ONETRUST LOADING — DO NOT MODIFY
   ========================================================== -->
+
   <script>
-    /* The Consent Profile ID to load */
+    /* Collection Point ID — separate from the script data-id above */
     const CP_ID = "cbc1219e-ed04-41b3-b4f0-1e9a71740089";
 
-    /* Wait until the OneTrust library is fully available */
     function whenOTReady(callback) {
       const timer = setInterval(() => {
         if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
@@ -328,7 +426,6 @@
       }, 80);
     }
 
-    /* When the page is ready, load the OneTrust form automatically */
     window.addEventListener("DOMContentLoaded", () => {
       whenOTReady(() => {
         OneTrust.webform.InstallCP(CP_ID, {
@@ -337,6 +434,6 @@
       });
     });
   </script>
+
 </body>
 </html>
-``
